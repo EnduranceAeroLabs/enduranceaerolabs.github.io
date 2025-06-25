@@ -1,0 +1,7 @@
+Copyright © 2025 Endurance Aero Labs. All rights reserved.
+
+This software and all associated materials are the intellectual property of Endurance Aero Labs. 
+Unauthorized use, reproduction, distribution, or modification of this code, in whole or in part, 
+is strictly prohibited without prior written consent.
+
+For inquiries regarding licensing or usage, please contact: EnduranceAeroLabs@gmail.com
