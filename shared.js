@@ -84,9 +84,28 @@
         if (hudPhase.textContent !== phase) hudPhase.textContent = phase;
       }
     }
-    updateHud();
-    window.addEventListener('scroll', updateHud, { passive: true });
-    window.addEventListener('resize', updateHud);
+    function updateHudBottomVisibility() {
+  const mobileQuery = window.matchMedia('(max-width: 880px)');
+  const doc = document.documentElement;
+
+  const scrollBottom = window.scrollY + window.innerHeight;
+  const pageBottom = doc.scrollHeight;
+
+  const isMobile = mobileQuery.matches;
+  const isAtBottom = Math.ceil(scrollBottom) >= pageBottom - 2;
+
+  hud.classList.toggle('mobile-bottom-hidden', isMobile && isAtBottom);
+}
+
+function updateEverythingHud() {
+  updateHud();
+  updateHudBottomVisibility();
+}
+
+updateEverythingHud();
+
+window.addEventListener('scroll', updateEverythingHud, { passive: true });
+window.addEventListener('resize', updateEverythingHud);
   }
 
   // ============================================================
