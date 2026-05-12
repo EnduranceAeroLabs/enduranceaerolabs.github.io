@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  MISSION BRIEF TEMPLATE
+  ============================================================
+  HOW TO USE THIS FILE:
+
+  1.  Copy this file and rename it to match your mission ID, e.g.:
+      cp mission-template.html cubesat.html
+
+  2.  Use Find & Replace to swap these placeholders globally:
+      - {{MISSION_ID}}      e.g. "M-005"
+      - {{MISSION_NAME}}    e.g. "CubeSat Feasibility Study"
+      - {{MISSION_TAGLINE}} e.g. "Small-Sat Communications Subsystem"
+      - {{MY_ROLE}}         e.g. "Communications Team Lead"
+      - {{ORG}}             e.g. "AIAA at UTA"
+      - {{DATES}}           e.g. "JAN 2025 — DEC 2025"
+      - {{STATUS}}          e.g. "Complete", "Active", "Flown"
+      - {{STATUS_CLASS}}    one of: active, complete, archived
+
+  3.  Edit each section's content. Sections marked OPTIONAL can be
+      deleted if they don't apply (e.g., a coursework project may
+      not need a trade study or timeline).
+
+  4.  Update the page <title> tag near the top.
+
+  5.  Update the dropdown menu in the nav (search "nav-dropdown-menu")
+      to point to your new file. Update on all other pages too.
+
+  6.  When you're done, delete this comment block.
+  ============================================================
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- EDIT: update title + description -->
+  <title>Mission Brief · {{MISSION_ID}} {{MISSION_NAME}} — Endurance Aero Labs</title>
+  <meta name="description" content="Mission brief for {{MISSION_NAME}}. {{MISSION_TAGLINE}}." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="mission-brief.css">
+</head>
+<body>
+
+  <!-- ========================== NAV ========================== -->
+  <!-- EDIT: keep the Missions dropdown in sync across all pages -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="brand" aria-label="Endurance Aero Labs">
+        <span class="brand-mark"><span></span></span>
+        Endurance&nbsp;Aero&nbsp;Labs
+      </a>
+      <div class="nav-links">
+        <a href="about.html">Operator</a>
+        <a href="index.html#capabilities">Capabilities</a>
+        <div class="nav-dropdown">
+          <a href="index.html#missions" class="nav-dropdown-trigger active">Missions <span class="caret">▾</span></a>
+          <div class="nav-dropdown-menu">
+            <a href="bluespear.html"><span class="dd-id">M-006</span><span class="dd-name">BlueSpear · Avionics</span></a>
+            <a href="mission-template.html"><span class="dd-id">M-005</span><span class="dd-name">CubeSat Feasibility</span></a>
+            <a href="mission-template.html"><span class="dd-id">M-004</span><span class="dd-name">L1 High-Power Rocket</span></a>
+            <a href="mission-template.html"><span class="dd-id">M-003</span><span class="dd-name">Composites &amp; RF</span></a>
+            <a href="mission-template.html"><span class="dd-id">M-002</span><span class="dd-name">6-DOF Sim</span></a>
+            <div class="nav-dropdown-sep"></div>
+            <a href="index.html#missions" class="dd-all">All missions →</a>
+          </div>
+        </div>
+        <a href="index.html#education">Training</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+      <div class="nav-status">
+        <span class="status-dot"></span>
+        Available · Summer&nbsp;2026
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+
+    <!-- ========================== BRIEF HERO ========================== -->
+    <section class="brief-hero">
+      <div class="container">
+
+        <!-- Breadcrumbs -->
+        <div class="brief-crumbs reveal">
+          <a href="index.html">Mission Log</a>
+          <span class="sep">/</span>
+          <a href="index.html#missions">Archive</a>
+          <span class="sep">/</span>
+          <span>{{MISSION_ID}} · {{MISSION_NAME}}</span>
+        </div>
+
+        <div class="brief-banner reveal">
+          <div>
+            <div class="brief-id-row">
+              <span>{{MISSION_ID}}</span><span class="pipe">·</span>
+              <span>{{MISSION_NAME_SHORT}}</span><span class="pipe">·</span>
+              <!-- STATUS_CLASS: active | complete | archived -->
+              <span class="status {{STATUS_CLASS}}"><span class="dot"></span>{{STATUS}}</span>
+            </div>
+            <h1 class="brief-title">{{MISSION_NAME_PRE}} <em>{{MISSION_NAME_HIGHLIGHT}}</em></h1>
+            <p class="brief-sub">{{MISSION_TAGLINE}}</p>
+          </div>
+
+          <!-- OPTIONAL: Mark badge. Customize the SVG or remove the block. -->
+          <div class="brief-mark" aria-hidden="true">
+            <svg viewBox="0 0 140 140">
+              <g class="rot">
+                <circle cx="70" cy="70" r="64" stroke-dasharray="2 5" fill="none" stroke="var(--accent)" stroke-width="0.8" />
+                <text x="70" y="14" font-family="JetBrains Mono" font-size="6" fill="var(--accent)" text-anchor="middle">{{MISSION_ID}}</text>
+              </g>
+              <circle cx="70" cy="70" r="42" fill="none" stroke="var(--fg-mute)" stroke-width="0.8" />
+              <!-- EDIT: replace this center symbol with something relevant -->
+              <circle cx="70" cy="70" r="20" fill="none" stroke="var(--accent)" stroke-width="1.2" />
+              <circle cx="70" cy="70" r="4" fill="var(--accent)" />
+              <line x1="70" y1="0" x2="70" y2="20" stroke="var(--accent)" stroke-width="0.8" />
+              <line x1="70" y1="120" x2="70" y2="140" stroke="var(--accent)" stroke-width="0.8" />
+              <line x1="0" y1="70" x2="20" y2="70" stroke="var(--accent)" stroke-width="0.8" />
+              <line x1="120" y1="70" x2="140" y2="70" stroke="var(--accent)" stroke-width="0.8" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Top facts strip -->
+        <div class="brief-facts reveal">
+          <div class="brief-fact">
+            <span class="brief-fact-label">Role</span>
+            <span class="brief-fact-value acc">{{MY_ROLE}}</span>
+          </div>
+          <div class="brief-fact">
+            <span class="brief-fact-label">Org</span>
+            <span class="brief-fact-value">{{ORG}}</span>
+          </div>
+          <div class="brief-fact">
+            <span class="brief-fact-label">Team</span>
+            <span class="brief-fact-value">{{TEAM_SIZE}}</span>
+          </div>
+          <div class="brief-fact">
+            <span class="brief-fact-label">Window</span>
+            <span class="brief-fact-value">{{DATES}}</span>
+          </div>
+          <div class="brief-fact">
+            <span class="brief-fact-label">Phase</span>
+            <span class="brief-fact-value acc">{{PHASE}}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 01 · OVERVIEW ========================== -->
+    <section class="brief">
+      <div class="container">
+        <header class="brief-section-head reveal">
+          <div class="brief-section-num">§ 01 · Overview</div>
+          <div>
+            <h2 class="brief-section-title">Mission <em>summary</em>.</h2>
+            <p class="brief-section-kicker">What this was and why it mattered.</p>
+          </div>
+        </header>
+
+        <div class="brief-two reveal">
+          <div class="brief-prose">
+            <!-- EDIT: 2–3 paragraphs of context. Aim for ~150–300 words. -->
+            <p>
+              {{OVERVIEW_PARAGRAPH_1 — Set the scene. What was the project, who ran it,
+              what was the headline objective.}}
+            </p>
+            <p>
+              {{OVERVIEW_PARAGRAPH_2 — Why it mattered. What problem did it solve, what
+              made it interesting or difficult.}}
+            </p>
+            <p>
+              {{OVERVIEW_PARAGRAPH_3 — Your scope. What did you personally own. Keep this
+              high-level; details go in §06.}}
+            </p>
+          </div>
+
+          <aside class="brief-aside">
+            <div class="brief-aside-block">
+              <div class="brief-aside-label">At a Glance</div>
+              <ul class="brief-aside-list">
+                <li>Mission ID <span class="acc">·</span> {{MISSION_ID}}</li>
+                <li>Subsystem <span class="acc">·</span> {{SUBSYSTEM}}</li>
+                <li>Phase <span class="acc">·</span> {{PHASE}}</li>
+                <li>Team Size <span class="acc">·</span> {{TEAM_SIZE}}</li>
+                <li>Cadence <span class="acc">·</span> {{CADENCE}}</li>
+              </ul>
+            </div>
+            <div class="brief-aside-block">
+              <div class="brief-aside-label">Scope Tags</div>
+              <ul class="brief-aside-list">
+                <!-- EDIT: 3–6 scope tags -->
+                <li>{{SCOPE_TAG_1}}</li>
+                <li>{{SCOPE_TAG_2}}</li>
+                <li>{{SCOPE_TAG_3}}</li>
+                <li>{{SCOPE_TAG_4}}</li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 02 · OBJECTIVES (OPTIONAL) ========================== -->
+    <section class="brief">
+      <div class="container">
+        <header class="brief-section-head reveal">
+          <div class="brief-section-num">§ 02 · Objectives</div>
+          <div>
+            <h2 class="brief-section-title">Project <em>objectives</em>.</h2>
+            <p class="brief-section-kicker">Numbered, traceable goals.</p>
+          </div>
+        </header>
+
+        <div class="brief-two reveal">
+          <div class="brief-prose">
+            <ul>
+              <!-- EDIT: 4–6 objectives. Tie each to a measurable outcome where possible. -->
+              <li><strong>OBJ-01 ·</strong> {{OBJECTIVE_1}}</li>
+              <li><strong>OBJ-02 ·</strong> {{OBJECTIVE_2}}</li>
+              <li><strong>OBJ-03 ·</strong> {{OBJECTIVE_3}}</li>
+              <li><strong>OBJ-04 ·</strong> {{OBJECTIVE_4}}</li>
+              <li><strong>OBJ-05 ·</strong> {{OBJECTIVE_5}}</li>
+            </ul>
+          </div>
+
+          <aside class="brief-aside">
+            <div class="brief-aside-block">
+              <div class="brief-aside-label">Success Criteria</div>
+              <ul class="brief-aside-list">
+                <li><span class="acc">✓</span> {{CRITERION_1}}</li>
+                <li><span class="acc">✓</span> {{CRITERION_2}}</li>
+                <li><span class="acc">✓</span> {{CRITERION_3}}</li>
+                <li><span class="acc">✓</span> {{CRITERION_4}}</li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 03 · FIGURE / DIAGRAM (OPTIONAL) ========================== -->
+    <!--
+      Use this section if you have a key technical figure: block diagram,
+      schematic, CAD render, test setup photo, plot, etc.
+      If using an image instead of SVG, replace the .arch-svg-wrap inner with:
+      <img src="assets/{{filename}}.jpg" alt="..." style="max-width:900px; width:100%;" />
+    -->
+    <section class="brief">
+      <div class="container">
+        <header class="brief-section-head reveal">
+          <div class="brief-section-num">§ 03 · Figure</div>
+          <div>
+            <h2 class="brief-section-title">{{FIGURE_TITLE}}</h2>
+            <p class="brief-section-kicker">{{FIGURE_KICKER}}</p>
+          </div>
+        </header>
+
+        <div class="arch-block reveal">
+          <div class="arch-block-head">
+            <span class="arch-block-title">FIG · 01 — {{FIGURE_NAME}}</span>
+            <span class="arch-block-meta">{{FIG_REV_OR_DATE}}</span>
+          </div>
+
+          <div class="arch-svg-wrap">
+            <!-- OPTION A: image file -->
+            <!-- <img src="assets/{{filename}}.jpg" alt="{{alt text}}" style="max-width:900px; width:100%;" /> -->
+
+            <!-- OPTION B: inline SVG (placeholder) -->
+            <svg class="arch-svg" viewBox="0 0 800 360" xmlns="http://www.w3.org/2000/svg">
+              <rect x="10" y="10" width="780" height="340" fill="none" stroke="var(--rule)" stroke-dasharray="4 4" />
+              <text x="400" y="180" font-family="JetBrains Mono" font-size="14" fill="var(--fg-mute)" text-anchor="middle" letter-spacing="0.14em">
+                FIGURE PLACEHOLDER — REPLACE WITH SVG OR IMG
+              </text>
+              <text x="400" y="200" font-family="JetBrains Mono" font-size="10" fill="var(--fg-mute)" text-anchor="middle" letter-spacing="0.12em">
+                See bluespear.html §03 for a working SVG block-diagram example
+              </text>
+            </svg>
+          </div>
+
+          <div class="arch-caption">
+            <span class="acc">FIG · 01</span> · {{FIGURE_CAPTION}}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 04 · TRADE STUDY (OPTIONAL) ========================== -->
+    <!--
+      Delete this whole section if not applicable.
+      Otherwise edit the table rows. Add class="selected" to the chosen row.
+      Use class="score s5" for excellent, s4 good, s3 okay, s2 poor.
+    -->
+    <section class="brief">
+      <div class="container">
+        <header class="brief-section-head reveal">
+          <div class="brief-section-num">§ 04 · Trade Study</div>
+          <div>
+            <h2 class="brief-section-title">{{TRADE_TITLE}}</h2>
+            <p class="brief-section-kicker">{{TRADE_KICKER}}</p>
+          </div>
+        </header>
+
+        <div class="reveal">
+          <table class="trade-table">
+            <thead>
+              <tr>
+                <th>Candidate</th>
+                <th>{{CRIT_1}}</th>
+                <th>{{CRIT_2}}</th>
+                <th>{{CRIT_3}}</th>
+                <th>{{CRIT_4}}</th>
+                <th>{{CRIT_5}}</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="selected">
+                <td class="candidate">{{CAND_1_NAME}}</td>
+                <td><span class="score s5">5</span></td>
+                <td><span class="score s4">4</span></td>
+                <td><span class="score s5">5</span></td>
+                <td><span class="score s4">4</span></td>
+                <td><span class="score s3">3</span></td>
+                <td><strong style="color: var(--accent);">21</strong></td>
+              </tr>
+              <tr>
+                <td class="candidate">{{CAND_2_NAME}}</td>
+                <td><span class="score s3">3</span></td>
+                <td><span class="score s5">5</span></td>
+                <td><span class="score s4">4</span></td>
+                <td><span class="score s3">3</span></td>
+                <td><span class="score s4">4</span></td>
+                <td>19</td>
+              </tr>
+              <tr>
+                <td class="candidate">{{CAND_3_NAME}}</td>
+                <td><span class="score s4">4</span></td>
+                <td><span class="score s3">3</span></td>
+                <td><span class="score s3">3</span></td>
+                <td><span class="score s5">5</span></td>
+                <td><span class="score s2">2</span></td>
+                <td>17</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 05 · TIMELINE (OPTIONAL) ========================== -->
+    <section class="brief">
+      <div class="container">
+        <header class="brief-section-head reveal">
+          <div class="brief-section-num">§ 05 · Timeline</div>
+          <div>
+            <h2 class="brief-section-title">Phases &amp; <em>milestones</em>.</h2>
+            <p class="brief-section-kicker">What happened, in order.</p>
+          </div>
+        </header>
+
+        <div class="timeline reveal">
+          <!-- Use class "done" for completed, "now" for in-progress, none for upcoming -->
+          <div class="tl-item done">
+            <div class="tl-date">{{TL_1_DATE}}</div>
+            <h3 class="tl-title">{{TL_1_TITLE}}</h3>
+            <p class="tl-body">{{TL_1_BODY}}</p>
+            <span class="tl-tag">CLOSED</span>
+          </div>
+
+          <div class="tl-item done">
+            <div class="tl-date">{{TL_2_DATE}}</div>
+            <h3 class="tl-title">{{TL_2_TITLE}}</h3>
+            <p class="tl-body">{{TL_2_BODY}}</p>
+            <span class="tl-tag">CLOSED</span>
+          </div>
+
+          <div class="tl-item done">
+            <div class="tl-date">{{TL_3_DATE}}</div>
+            <h3 class="tl-title">{{TL_3_TITLE}}</h3>
+            <p class="tl-body">{{TL_3_BODY}}</p>
+            <span class="tl-tag">CLOSED</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 06 · MY ROLE ========================== -->
+    <section class="brief">
+      <div class="container">
+        <header class="brief-section-head reveal">
+          <div class="brief-section-num">§ 06 · My Role</div>
+          <div>
+            <h2 class="brief-section-title">What <em>I owned</em>.</h2>
+            <p class="brief-section-kicker">Specific responsibilities and contributions.</p>
+          </div>
+        </header>
+
+        <div class="brief-two reveal">
+          <div class="brief-prose">
+            <p>{{ROLE_INTRO_PARAGRAPH}}</p>
+            <ul>
+              <!-- EDIT: 4–6 bullets. Lead with strong verbs. Be specific. -->
+              <li><strong>{{CONTRIB_1_LABEL}}.</strong> {{CONTRIB_1_BODY}}</li>
+              <li><strong>{{CONTRIB_2_LABEL}}.</strong> {{CONTRIB_2_BODY}}</li>
+              <li><strong>{{CONTRIB_3_LABEL}}.</strong> {{CONTRIB_3_BODY}}</li>
+              <li><strong>{{CONTRIB_4_LABEL}}.</strong> {{CONTRIB_4_BODY}}</li>
+            </ul>
+            <p>
+              <strong>Outcome:</strong> {{OUTCOME_PARAGRAPH — what was delivered, what was
+              learned, what would you do differently. This is the part recruiters remember.}}
+            </p>
+          </div>
+
+          <aside class="brief-aside">
+            <div class="brief-aside-block">
+              <div class="brief-aside-label">Tools Used</div>
+              <ul class="brief-aside-list">
+                <!-- EDIT: relevant tools/languages -->
+                <li>{{TOOL_1}}</li>
+                <li>{{TOOL_2}}</li>
+                <li>{{TOOL_3}}</li>
+                <li>{{TOOL_4}}</li>
+              </ul>
+            </div>
+            <div class="brief-aside-block">
+              <div class="brief-aside-label">Deliverables</div>
+              <ul class="brief-aside-list">
+                <li>{{DELIV_1}} <span class="acc">·</span> Done</li>
+                <li>{{DELIV_2}} <span class="acc">·</span> Done</li>
+                <li>{{DELIV_3}} <span class="acc">·</span> Done</li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== BRIEF FOOT ========================== -->
+    <section class="brief-foot">
+      <div class="container">
+        <div class="brief-foot-grid">
+          <p class="brief-foot-left">
+            End of brief. Questions, corrections, or interview requests — <em>open a channel</em>.
+          </p>
+          <div class="brief-foot-actions">
+            <a href="index.html#missions" class="brief-action">← Back to Mission Log</a>
+            <a href="index.html#contact" class="brief-action primary">Open a Channel →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div>© 2026 · Christian Ibarra</div>
+        <div>{{MISSION_ID}} · {{MISSION_NAME}} · Mission Brief</div>
+        <div>Last Update · <span id="ts">—</span></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="shared.js"></script>
+</body>
+</html>
