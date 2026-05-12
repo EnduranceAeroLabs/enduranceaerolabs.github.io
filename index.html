@@ -38,7 +38,14 @@
       transition: opacity .8s ease .2s, transform .8s ease .2s;
       pointer-events: none;
     }
-    .hud.in { opacity: 1; transform: translateY(0); }
+    .hud.in { 
+      opacity: 1;
+      transform: translateY(0); 
+    }
+    .hud.mobile-bottom-hidden {
+      opacity: 0 !important;
+      transform: translateY(18px) !important;
+    }
     .hud-head {
       display: flex; justify-content: space-between; align-items: center;
       padding-bottom: 8px;
