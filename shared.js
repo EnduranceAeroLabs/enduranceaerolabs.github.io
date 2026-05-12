@@ -93,7 +93,7 @@ function updateHudBottomVisibility() {
 
   const isAtBottom = Math.ceil(scrollBottom) >= pageBottom - 2;
 
-  hud.classList.toggle('mobile-bottom-hidden', isAtBottom);
+  hud.classList.toggle('bottom-hidden', isAtBottom);
 }
 
 function updateEverythingHud() {
