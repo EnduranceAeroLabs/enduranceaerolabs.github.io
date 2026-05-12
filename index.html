@@ -1,0 +1,1771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Christian Ibarra — Endurance Aero Labs</title>
+  <meta name="description" content="Christian Ibarra — Aerospace Engineering student at UT Arlington. Avionics, flight systems, and spacecraft dynamics." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="shared.css">
+
+  <style>
+    /* =========================
+       MISSION HUD (fixed)
+       ========================= */
+    .hud {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      z-index: 40;
+      background: rgba(17, 21, 30, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--rule);
+      padding: 14px 16px 12px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--fg-soft);
+      display: flex; flex-direction: column; gap: 8px;
+      min-width: 240px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .8s ease .2s, transform .8s ease .2s;
+      pointer-events: none;
+    }
+    .hud.in { opacity: 1; transform: translateY(0); }
+    .hud-head {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 4px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .hud-head .hud-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 3px rgba(224, 153, 90, .18);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+    .hud-row {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+    .hud-label { color: var(--fg-mute); }
+    .hud-value { color: var(--fg); font-weight: 500; font-size: 11px; letter-spacing: 0.06em; }
+    .hud-bar {
+      height: 4px;
+      background: rgba(237, 231, 217, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    .hud-bar-fill {
+      position: absolute; left: 0; top: 0; bottom: 0;
+      background: var(--accent);
+      width: 0%;
+      transition: width .15s linear;
+    }
+    @media (max-width: 880px) {
+      .hud { display: none; }
+    }
+
+    /* =========================
+       HERO
+       ========================= */
+    .hero {
+      min-height: 100vh;
+      min-height: 100svh;
+      padding: 140px 0 80px;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      width: 100%;
+    }
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 32px;
+      font-weight: 500;
+    }
+    .hero-eyebrow::before {
+      content: ""; width: 32px; height: 1px; background: var(--accent);
+    }
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(54px, 11vw, 168px);
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      font-weight: 400;
+      margin: 0;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-sub {
+      max-width: 660px;
+      margin-top: 40px;
+      font-size: 19px;
+      line-height: 1.6;
+      color: var(--fg-soft);
+      font-weight: 400;
+    }
+    .hero-sub strong {
+      color: var(--fg);
+      font-weight: 600;
+    }
+
+    .hero-meta {
+      margin-top: 56px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      border-top: 1px solid var(--rule);
+      padding-top: 24px;
+    }
+    .hero-meta-item {
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .hero-meta-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--fg-mute);
+      font-weight: 500;
+    }
+    .hero-meta-value {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--fg);
+      letter-spacing: 0.02em;
+      font-weight: 500;
+    }
+
+    @media (max-width: 760px) {
+      .hero-meta { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .hero-mark {
+      position: absolute;
+      right: var(--pad-x);
+      top: 140px;
+      width: 120px; height: 120px;
+      display: none;
+    }
+    .hero-mark svg { width: 100%; height: 100%; opacity: 0.55; }
+    .hero-mark svg circle.spin {
+      transform-origin: center;
+      animation: spin 60s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (min-width: 980px) { .hero-mark { display: block; } }
+
+    /* =========================
+       SCHEMATIC DIVIDER
+       ========================= */
+    .divider {
+      padding: 60px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .divider-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--pad-x);
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 32px;
+    }
+    .divider-line {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--rule) 50%, transparent);
+    }
+    .divider-line.r {
+      background: linear-gradient(to left, transparent, var(--rule) 50%, transparent);
+    }
+    .divider-art {
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      color: var(--fg-mute);
+    }
+    .divider-art svg {
+      width: 280px; height: 64px;
+      stroke: var(--fg-mute);
+      stroke-width: 0.6;
+      fill: none;
+      overflow: visible;
+    }
+    .divider-art svg .acc { stroke: var(--accent); }
+    .divider-art svg .dot { fill: var(--accent); stroke: none; }
+    .divider-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--fg-mute);
+      font-weight: 500;
+    }
+    .divider-label .acc { color: var(--accent); }
+
+    /* Animate satellite traveling on orbit */
+    .sat-orbit {
+      offset-path: path("M 10 32 Q 70 -20 140 32 T 270 32");
+      animation: orbit 9s ease-in-out infinite;
+    }
+    @keyframes orbit {
+      from { offset-distance: 0%; }
+      to   { offset-distance: 100%; }
+    }
+
+    /* Antenna signal waves */
+    .signal-wave {
+      stroke-dasharray: 60;
+      stroke-dashoffset: 60;
+      animation: wave 2.2s ease-out infinite;
+    }
+    .signal-wave.w2 { animation-delay: .55s; }
+    .signal-wave.w3 { animation-delay: 1.1s; }
+    @keyframes wave {
+      0%   { stroke-dashoffset: 60; opacity: 0; }
+      30%  { opacity: 1; }
+      100% { stroke-dashoffset: 0;  opacity: 0; }
+    }
+
+    @media (max-width: 760px) {
+      .divider-inner { grid-template-columns: 1fr; }
+      .divider-line { display: none; }
+      .divider-art svg { width: 200px; height: 50px; }
+    }
+
+    /* =========================
+       SECTION HEADERS
+       ========================= */
+    section { padding: 100px 0; position: relative; }
+    .section-head {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 32px;
+      align-items: baseline;
+      margin-bottom: 64px;
+      border-top: 1px solid var(--rule);
+      padding-top: 32px;
+    }
+    .section-num {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: 1;
+      font-weight: 400;
+      letter-spacing: -0.015em;
+      margin: 0;
+    }
+    .section-title em { font-style: italic; color: var(--accent); }
+    .section-kicker {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--fg-mute);
+      margin-top: 16px;
+      max-width: 540px;
+      font-weight: 500;
+    }
+    @media (max-width: 760px) {
+      .section-head { grid-template-columns: 1fr; gap: 12px; }
+    }
+
+    /* =========================
+       ABOUT
+       ========================= */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+    }
+    .about-body p {
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--fg-soft);
+      margin: 0 0 20px;
+      font-weight: 400;
+    }
+    .about-body p strong {
+      color: var(--fg);
+      font-weight: 600;
+    }
+    .about-body .lede {
+      font-family: var(--serif);
+      font-size: 30px;
+      line-height: 1.3;
+      color: var(--fg);
+      margin-bottom: 28px;
+      font-weight: 400;
+    }
+    .about-body .lede span.acc { color: var(--accent); }
+
+    .about-aside {
+      border-left: 1px solid var(--rule);
+      padding-left: 40px;
+    }
+    .about-fact {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 20px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--rule);
+      font-size: 14px;
+    }
+    .about-fact:last-child { border-bottom: none; }
+    .about-fact dt {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--fg-mute);
+      padding-top: 4px;
+      font-weight: 500;
+    }
+    .about-fact dd {
+      margin: 0;
+      color: var(--fg);
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.65;
+      font-weight: 400;
+    }
+    .about-fact dd .hi {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    @media (max-width: 880px) {
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .about-aside { border-left: none; padding-left: 0; border-top: 1px solid var(--rule); padding-top: 32px; }
+    }
+
+    /* =========================
+       CAPABILITIES
+       ========================= */
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+    .cap-cell {
+      background: var(--bg);
+      padding: 32px 28px;
+      min-height: 220px;
+      display: flex; flex-direction: column;
+      transition: background .3s ease;
+    }
+    .cap-cell:hover { background: var(--bg-soft); }
+    .cap-cell-head {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 24px;
+    }
+    .cap-cell-id {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .cap-cell-title {
+      font-family: var(--serif);
+      font-size: 26px;
+      font-weight: 400;
+      margin: 0;
+      font-style: italic;
+    }
+    .cap-cell-desc {
+      margin: 8px 0 18px;
+      color: var(--fg-soft);
+      font-size: 13.5px;
+      line-height: 1.55;
+    }
+    .cap-cell-list {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-wrap: wrap; gap: 6px 8px;
+    }
+    .cap-cell-list li {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--fg);
+      padding: 4px 10px;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      transition: all .25s ease;
+      font-weight: 400;
+    }
+    .cap-cell-list li:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    @media (max-width: 880px) {
+      .cap-grid { grid-template-columns: 1fr; }
+    }
+
+    /* =========================
+       MISSIONS
+       ========================= */
+    .missions {
+      display: flex; flex-direction: column;
+      border-top: 1px solid var(--rule);
+      position: relative;
+    }
+    .mission {
+      display: grid;
+      grid-template-columns: 200px 1fr 280px;
+      gap: 48px;
+      padding: 56px 0;
+      border-bottom: 1px solid var(--rule);
+      position: relative;
+      transition: background .35s ease;
+    }
+    .mission::before {
+      content: "";
+      position: absolute;
+      left: -24px; top: 64px;
+      width: 12px; height: 12px;
+      border: 1px solid var(--accent);
+      background: var(--bg);
+      transform: rotate(45deg);
+      transition: background .5s ease, transform .5s ease, box-shadow .5s ease;
+    }
+    .mission.in::before {
+      background: var(--accent);
+      box-shadow: 0 0 0 6px rgba(224, 153, 90, 0.18);
+    }
+    .mission:hover { background: rgba(237, 231, 217, 0.02); }
+
+    .mission-meta {
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .mission-id {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .mission-dates {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--fg-mute);
+      letter-spacing: 0.04em;
+      font-weight: 500;
+    }
+    .mission-status {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 6px 10px;
+      border: 1px solid var(--rule);
+      border-radius: 3px;
+      align-self: flex-start;
+      color: var(--fg-soft);
+      font-weight: 600;
+    }
+    .mission-status .dot {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--fg-mute);
+    }
+    .mission-status.active .dot   { background: var(--accent); box-shadow: 0 0 0 3px rgba(224,153,90,.18); }
+    .mission-status.active        { color: var(--accent); border-color: rgba(224,153,90,.4); }
+    .mission-status.complete .dot { background: var(--accent-2); }
+    .mission-status.archived .dot { background: var(--fg-mute); }
+
+    .mission-body { min-width: 0; }
+    .mission-role {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--fg-mute);
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+    .mission-title {
+      font-family: var(--serif);
+      font-size: clamp(32px, 4vw, 48px);
+      line-height: 1.02;
+      font-weight: 400;
+      margin: 0 0 20px;
+      letter-spacing: -0.01em;
+      color: var(--fg);
+    }
+    .mission-title em {
+      font-style: italic;
+      color: var(--fg-soft);
+      transition: color .35s ease;
+    }
+    .mission:hover .mission-title em,
+    .mission.in   .mission-title em { color: var(--accent); }
+
+    .mission-summary {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--fg-soft);
+      margin: 0 0 24px;
+      max-width: 64ch;
+      font-weight: 400;
+    }
+    .mission-points {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-direction: column; gap: 14px;
+      max-width: 70ch;
+    }
+    .mission-points li {
+      position: relative;
+      padding-left: 22px;
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--fg-soft);
+      font-weight: 400;
+    }
+    .mission-points li::before {
+      content: ""; position: absolute; left: 0; top: 11px;
+      width: 10px; height: 1px; background: var(--accent);
+    }
+
+    .mission-aside {
+      display: flex; flex-direction: column; gap: 20px;
+      border-left: 1px solid var(--rule);
+      padding-left: 32px;
+    }
+    .mission-aside-block {
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .mission-aside-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--fg-mute);
+      font-weight: 500;
+    }
+    .mission-tags {
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+    .mission-tags span {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--fg-soft);
+      padding: 3px 8px;
+      background: var(--bg-soft);
+      border: 1px solid var(--rule);
+      font-weight: 500;
+    }
+    .mission-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--fg);
+      padding-top: 8px;
+      border-top: 1px solid var(--rule);
+      transition: color .25s ease, gap .25s ease;
+      font-weight: 600;
+    }
+    .mission-link:hover { color: var(--accent); gap: 14px; }
+    .mission-link .arrow {
+      width: 18px; height: 1px; background: currentColor;
+      position: relative;
+      transition: width .25s ease;
+    }
+    .mission-link:hover .arrow { width: 24px; }
+    .mission-link .arrow::after {
+      content: ""; position: absolute; right: 0; top: -3px;
+      width: 7px; height: 7px;
+      border-right: 1px solid currentColor;
+      border-top: 1px solid currentColor;
+      transform: rotate(45deg);
+    }
+
+    @media (max-width: 980px) {
+      .mission {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 40px 0;
+      }
+      .mission::before { display: none; }
+      .mission-aside {
+        border-left: none;
+        padding-left: 0;
+        border-top: 1px solid var(--rule);
+        padding-top: 24px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 32px;
+      }
+    }
+
+    /* =========================
+       EDUCATION
+       ========================= */
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .edu-card {
+      padding: 36px;
+      border: 1px solid var(--rule);
+      background: var(--bg-soft);
+      display: flex; flex-direction: column; gap: 16px;
+      transition: border-color .3s ease, transform .3s ease;
+    }
+    .edu-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .edu-head {
+      display: flex; justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--fg-mute);
+      font-weight: 500;
+    }
+    .edu-head .accent { color: var(--accent); }
+    .edu-school {
+      font-family: var(--serif);
+      font-size: 30px;
+      line-height: 1.1;
+      margin: 0;
+      font-weight: 400;
+    }
+    .edu-degree {
+      font-size: 15px;
+      color: var(--fg-soft);
+      line-height: 1.6;
+      margin: 0;
+      font-weight: 400;
+    }
+    .edu-degree strong { color: var(--fg); font-weight: 600; }
+    .edu-degree .acc { color: var(--accent); }
+    @media (max-width: 760px) { .edu-grid { grid-template-columns: 1fr; } }
+
+    /* =========================
+       COURSEWORK
+       ========================= */
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+    .course-row {
+      background: var(--bg);
+      padding: 22px 28px;
+      display: grid;
+      grid-template-columns: 110px 1fr auto;
+      gap: 20px;
+      align-items: center;
+      transition: background .25s ease;
+    }
+    .course-row:hover { background: var(--bg-soft); }
+    .course-code {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .course-name {
+      font-family: var(--serif);
+      font-size: 20px;
+      line-height: 1.2;
+      color: var(--fg);
+    }
+    .course-name em { font-style: italic; color: var(--fg-soft); font-size: 14px; }
+    .course-status {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--fg-mute);
+      font-weight: 500;
+    }
+    .course-status.now { color: var(--accent); }
+    .course-status.done { color: var(--accent-2); }
+    .course-row.placeholder .course-name { color: var(--fg-mute); font-style: italic; }
+    .course-row.placeholder .course-code { color: var(--fg-mute); }
+    @media (max-width: 880px) {
+      .course-grid { grid-template-columns: 1fr; }
+      .course-row { grid-template-columns: 90px 1fr auto; padding: 18px 22px; }
+    }
+
+    /* =========================
+       LEADERSHIP
+       ========================= */
+    .lead-list {
+      display: flex; flex-direction: column;
+      border-top: 1px solid var(--rule);
+    }
+    .lead-item {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 32px;
+      padding: 32px 0;
+      border-bottom: 1px solid var(--rule);
+      align-items: baseline;
+    }
+    .lead-org {
+      font-family: var(--serif);
+      font-size: 26px;
+      line-height: 1.2;
+      margin: 0;
+      font-weight: 400;
+    }
+    .lead-role {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 6px 0 0;
+      font-weight: 600;
+    }
+    .lead-body {
+      font-size: 15px;
+      color: var(--fg-soft);
+      line-height: 1.65;
+      font-weight: 400;
+    }
+    .lead-dates {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--fg-mute);
+      text-align: right;
+      font-weight: 500;
+    }
+    @media (max-width: 880px) {
+      .lead-item { grid-template-columns: 1fr; gap: 12px; }
+      .lead-dates { text-align: left; }
+    }
+
+    /* =========================
+       CONTACT
+       ========================= */
+    #contact { padding-bottom: 60px; }
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: end;
+    }
+    .contact-title {
+      font-family: var(--serif);
+      font-size: clamp(48px, 8vw, 120px);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      font-weight: 400;
+      margin: 0;
+    }
+    .contact-title em { font-style: italic; color: var(--accent); }
+
+    .contact-channels {
+      display: flex; flex-direction: column; gap: 0;
+      border-top: 1px solid var(--rule);
+    }
+    .contact-channel {
+      display: grid;
+      grid-template-columns: 100px 1fr auto;
+      gap: 24px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--rule);
+      align-items: center;
+      transition: padding-left .3s ease;
+    }
+    .contact-channel:hover { padding-left: 8px; }
+    .contact-channel:hover .ch-arrow { transform: translateX(4px); color: var(--accent); }
+    .ch-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--fg-mute);
+      font-weight: 500;
+    }
+    .ch-value {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--fg);
+      word-break: break-all;
+      font-weight: 500;
+    }
+    .ch-arrow {
+      font-family: var(--mono); font-size: 16px;
+      color: var(--fg-mute);
+      transition: transform .25s ease, color .25s ease;
+    }
+    @media (max-width: 880px) {
+      .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hud-dot, .signal-wave, .hero-mark svg circle.spin { animation: none; }
+    }
+
+    /* =========================
+       HOMEPAGE · MOBILE + iPAD TUNING
+       ========================= */
+
+    /* iPad portrait (≈ 600–980px): keep 2 cols where there's room */
+    @media (min-width: 600px) and (max-width: 980px) {
+      .cap-grid { grid-template-columns: repeat(2, 1fr); }
+      .cap-grid .cap-cell:nth-child(3) { grid-column: 1 / -1; }
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .about-aside { border-left: none; padding-left: 0; border-top: 1px solid var(--rule); padding-top: 32px; }
+      .edu-grid { grid-template-columns: 1fr 1fr; }
+      .course-grid { grid-template-columns: 1fr 1fr; }
+      .lead-item { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .lead-dates { grid-column: 1 / -1; text-align: left; }
+    }
+
+    /* Phones (≤ 760px) */
+    @media (max-width: 760px) {
+      .hero { padding: 110px 0 60px; min-height: auto; }
+      .hero-title { font-size: clamp(48px, 14vw, 90px); }
+      .hero-sub { font-size: 17px; margin-top: 32px; }
+      .hero-meta { margin-top: 40px; padding-top: 20px; gap: 18px; }
+      .hero-meta-value { font-size: 12px; }
+
+      .section-head { margin-bottom: 40px; padding-top: 24px; }
+      .section-num { font-size: 10px; }
+
+      .divider { padding: 40px 0; }
+
+      /* Mission cards: tighter, no awkward aside-row */
+      .mission { padding: 32px 0; gap: 20px; }
+      .mission-title { font-size: clamp(28px, 7vw, 38px); }
+      .mission-summary { font-size: 15px; }
+      .mission-points li { font-size: 14px; }
+      .mission-aside { flex-direction: column; gap: 20px; padding-top: 20px; }
+
+      /* Capabilities */
+      .cap-cell { padding: 24px 20px; min-height: 0; }
+      .cap-cell-title { font-size: 22px; }
+
+      /* Education */
+      .edu-card { padding: 24px; }
+      .edu-school { font-size: 26px; }
+
+      /* Coursework */
+      .course-row { padding: 16px 18px; gap: 14px; }
+      .course-name { font-size: 17px; }
+
+      /* Leadership */
+      .lead-item { padding: 24px 0; }
+      .lead-org { font-size: 22px; }
+
+      /* Contact */
+      .contact-title { font-size: clamp(42px, 11vw, 72px); }
+      .contact-channel { grid-template-columns: 80px 1fr auto; padding: 18px 0; gap: 14px; min-height: 44px; }
+      .ch-value { font-size: 12px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-meta { grid-template-columns: 1fr 1fr; gap: 16px; }
+      .contact-channel { grid-template-columns: 1fr; gap: 4px; align-items: flex-start; padding: 16px 0; }
+      .contact-channel .ch-arrow { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================== NAV ========================== -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#top" class="brand" aria-label="Endurance Aero Labs">
+        <span class="brand-mark"><span></span></span>
+        Endurance&nbsp;Aero&nbsp;Labs
+      </a>
+      <div class="nav-links">
+        <a href="about.html">Operator</a>
+        <a href="#capabilities">Capabilities</a>
+        <div class="nav-dropdown">
+          <a href="#missions" class="nav-dropdown-trigger">Missions <span class="caret">▾</span></a>
+          <div class="nav-dropdown-menu">
+            <a href="bluespear.html"><span class="dd-id">M-006</span><span class="dd-name">BlueSpear · Avionics</span></a>
+            <a href="mission-template.html"><span class="dd-id">M-005</span><span class="dd-name">CubeSat Feasibility</span></a>
+            <a href="mission-template.html"><span class="dd-id">M-004</span><span class="dd-name">L1 High-Power Rocket</span></a>
+            <a href="mission-template.html"><span class="dd-id">M-003</span><span class="dd-name">Composites &amp; RF</span></a>
+            <a href="mission-template.html"><span class="dd-id">M-002</span><span class="dd-name">6-DOF Sim</span></a>
+            <div class="nav-dropdown-sep"></div>
+            <a href="#missions" class="dd-all">All missions →</a>
+          </div>
+        </div>
+        <a href="#education">Training</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="nav-status">
+        <span class="status-dot"></span>
+        Available · Summer&nbsp;2026
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========================== MISSION HUD ========================== -->
+  <aside class="hud" id="hud" aria-hidden="true">
+    <div class="hud-head">
+      <span>Mission HUD</span>
+      <span class="hud-dot"></span>
+    </div>
+    <div class="hud-row">
+      <span class="hud-label">T+</span>
+      <span class="hud-value" id="hud-t">00:00:00</span>
+    </div>
+    <div class="hud-row">
+      <span class="hud-label">ALT</span>
+      <span class="hud-value" id="hud-alt">000%</span>
+    </div>
+    <div class="hud-row">
+      <span class="hud-label">PHASE</span>
+      <span class="hud-value" id="hud-phase">PRE-LAUNCH</span>
+    </div>
+    <div class="hud-bar"><div class="hud-bar-fill" id="hud-bar"></div></div>
+  </aside>
+
+  <main id="top">
+
+    <!-- ========================== HERO ========================== -->
+    <section class="hero" data-phase="OPERATOR INTAKE">
+      <div class="container">
+
+        <div class="hero-mark" aria-hidden="true">
+          <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="0.5">
+            <circle class="spin" cx="60" cy="60" r="58" stroke="var(--accent)" stroke-dasharray="2 4" />
+            <circle cx="60" cy="60" r="40" stroke="var(--fg-mute)" />
+            <circle cx="60" cy="60" r="3"  fill="var(--accent)" stroke="none" />
+            <line x1="60" y1="0"  x2="60" y2="20"  stroke="var(--accent)" />
+            <line x1="60" y1="100" x2="60" y2="120" stroke="var(--accent)" />
+            <line x1="0"  y1="60" x2="20" y2="60"  stroke="var(--accent)" />
+            <line x1="100" y1="60" x2="120" y2="60" stroke="var(--accent)" />
+            <text x="60" y="115" font-family="JetBrains Mono" font-size="6" fill="var(--fg-mute)" text-anchor="middle" stroke="none">EAL · ARL · TX</text>
+          </svg>
+        </div>
+
+        <div class="hero-grid reveal">
+          <div class="hero-eyebrow">M-2026 / OPERATOR FILE / CIB</div>
+          <h1 class="hero-title">
+            Christian<br>
+            <em>Ibarra</em>
+          </h1>
+          <p class="hero-sub">
+            <strong>Aerospace engineering student</strong> at UT&nbsp;Arlington focused on
+            <strong>avionics, command &amp; data handling, and spacecraft dynamics.</strong>
+            Building flight-ready systems through student-led missions, undergraduate
+            research, and personal projects.
+          </p>
+
+          <dl class="hero-meta">
+            <div class="hero-meta-item">
+              <span class="hero-meta-label">Position</span>
+              <span class="hero-meta-value">Avionics Lead</span>
+            </div>
+            <div class="hero-meta-item">
+              <span class="hero-meta-label">Affiliation</span>
+              <span class="hero-meta-value">AIAA · UTA</span>
+            </div>
+            <div class="hero-meta-item">
+              <span class="hero-meta-label">Grad. Window</span>
+              <span class="hero-meta-value">MAY · 2027</span>
+            </div>
+            <div class="hero-meta-item">
+              <span class="hero-meta-label">Coordinates</span>
+              <span class="hero-meta-value">32.74° N / 97.11° W</span>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== DIVIDER 01: PERSONNEL ========================== -->
+    <div class="divider" aria-hidden="true">
+      <div class="divider-inner">
+        <div class="divider-line"></div>
+        <div class="divider-art">
+          <svg viewBox="0 0 280 64">
+            <!-- ID badge schematic -->
+            <rect x="40" y="14" width="60" height="40" />
+            <line x1="48" y1="22" x2="92" y2="22" />
+            <line x1="48" y1="30" x2="80" y2="30" />
+            <line x1="48" y1="38" x2="86" y2="38" />
+            <line x1="48" y1="46" x2="72" y2="46" />
+            <line x1="100" y1="32" x2="130" y2="32" class="acc" />
+            <circle cx="135" cy="32" r="3" class="dot" />
+            <line x1="140" y1="32" x2="170" y2="32" class="acc" />
+            <!-- Crosshair -->
+            <circle cx="200" cy="32" r="14" />
+            <line x1="186" y1="32" x2="214" y2="32" />
+            <line x1="200" y1="18" x2="200" y2="46" />
+            <circle cx="200" cy="32" r="2" class="dot" />
+            <!-- Tick scale -->
+            <line x1="230" y1="32" x2="270" y2="32" />
+            <line x1="232" y1="28" x2="232" y2="36" />
+            <line x1="240" y1="29" x2="240" y2="35" />
+            <line x1="248" y1="28" x2="248" y2="36" />
+            <line x1="256" y1="29" x2="256" y2="35" />
+            <line x1="264" y1="28" x2="264" y2="36" />
+          </svg>
+          <span class="divider-label">Personnel <span class="acc">·</span> Identification <span class="acc">·</span> §01</span>
+        </div>
+        <div class="divider-line r"></div>
+      </div>
+    </div>
+
+    <!-- ========================== ABOUT ========================== -->
+    <section id="about" data-phase="OPERATOR PROFILE">
+      <div class="container">
+        <header class="section-head reveal">
+          <div class="section-num">§ 01 · Operator</div>
+          <div>
+            <h2 class="section-title">Built for <em>flight hardware</em>, written like a brief.</h2>
+            <p class="section-kicker">Background, focus areas, and current operating envelope.</p>
+          </div>
+        </header>
+
+        <div class="about-grid reveal">
+          <div class="about-body">
+            <p class="lede">
+              I'm an aerospace engineering student with a deliberate bias toward
+              <span class="acc">avionics and flight systems</span> — the boxes that have to work the moment
+              power goes on.
+            </p>
+            <p>
+              I'm currently the <strong>Avionics Lead</strong> for Project BlueSpear, AIAA at UTA's student
+              space launch vehicle, where I run subsystem trade studies, write interface and
+              hazard documentation, and plan integration for the flight computer and sensor
+              stack.
+            </p>
+            <p>
+              Before BlueSpear, I led the communications side of a CubeSat feasibility study,
+              fabricated graphene-reinforced polymer composites in a nanoscience lab while
+              running an in-house RF attenuation experiment, built a Level&nbsp;1 high-power
+              rocket on my own, and modeled 6-DOF spacecraft dynamics in MATLAB and Simulink
+              for coursework.
+            </p>
+            <p>
+              I'm looking for a <strong>Summer&nbsp;2026 internship</strong> where I can keep moving toward
+              real flight hardware — avionics, GNC, integration &amp; test, or systems
+              engineering on launch vehicles, spacecraft, or in-space systems.
+            </p>
+          </div>
+
+          <aside class="about-aside">
+            <dl>
+              <div class="about-fact">
+                <dt>Pursuing</dt>
+                <dd><span class="hi">B.S. Aerospace Engineering</span><br>+ Minors in Mechanical Eng. and Space Systems Eng.</dd>
+              </div>
+              <div class="about-fact">
+                <dt>Focus</dt>
+                <dd>Avionics · CDH · GNC · Spacecraft Dynamics · Integration &amp; Test</dd>
+              </div>
+              <div class="about-fact">
+                <dt>Languages</dt>
+                <dd>English (native) · Spanish (fluent)</dd>
+              </div>
+              <div class="about-fact">
+                <dt>Citizenship</dt>
+                <dd>U.S. Citizen — <span class="hi">ITAR / export-control eligible</span></dd>
+              </div>
+              <div class="about-fact">
+                <dt>Based</dt>
+                <dd>Arlington, TX — willing to relocate</dd>
+              </div>
+              <div class="about-fact">
+                <dt>Open To</dt>
+                <dd><span class="hi">Summer 2026 internships</span><br>Avionics · GNC · Systems · I&amp;T</dd>
+              </div>
+            </dl>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== DIVIDER 02: CIRCUIT ========================== -->
+    <div class="divider" aria-hidden="true">
+      <div class="divider-inner">
+        <div class="divider-line"></div>
+        <div class="divider-art">
+          <svg viewBox="0 0 280 64">
+            <!-- Circuit trace -->
+            <line x1="10" y1="32" x2="60" y2="32" />
+            <rect x="60" y="22" width="28" height="20" />
+            <line x1="88" y1="32" x2="110" y2="32" />
+            <circle cx="115" cy="32" r="4" />
+            <line x1="119" y1="32" x2="140" y2="32" class="acc" />
+            <!-- IC chip -->
+            <rect x="140" y="18" width="36" height="28" class="acc" />
+            <line x1="146" y1="14" x2="146" y2="18" class="acc" />
+            <line x1="156" y1="14" x2="156" y2="18" class="acc" />
+            <line x1="166" y1="14" x2="166" y2="18" class="acc" />
+            <line x1="146" y1="46" x2="146" y2="50" class="acc" />
+            <line x1="156" y1="46" x2="156" y2="50" class="acc" />
+            <line x1="166" y1="46" x2="166" y2="50" class="acc" />
+            <line x1="176" y1="32" x2="200" y2="32" />
+            <circle cx="200" cy="32" r="4" />
+            <line x1="204" y1="32" x2="230" y2="32" />
+            <!-- Resistor zigzag -->
+            <polyline points="230,32 234,26 240,38 246,26 252,38 258,32 270,32" />
+          </svg>
+          <span class="divider-label">Capability <span class="acc">·</span> Matrix <span class="acc">·</span> §02</span>
+        </div>
+        <div class="divider-line r"></div>
+      </div>
+    </div>
+
+    <!-- ========================== CAPABILITIES ========================== -->
+    <section id="capabilities" data-phase="CAPABILITY MATRIX">
+      <div class="container">
+        <header class="section-head reveal">
+          <div class="section-num">§ 02 · Capabilities</div>
+          <div>
+            <h2 class="section-title">Toolchain &amp; <em>working envelope</em>.</h2>
+            <p class="section-kicker">Software, hardware, and technical proficiency by category.</p>
+          </div>
+        </header>
+
+        <div class="cap-grid reveal">
+          <div class="cap-cell">
+            <div class="cap-cell-head"><span class="cap-cell-id">CAP · 01</span></div>
+            <h3 class="cap-cell-title">Programming</h3>
+            <p class="cap-cell-desc">Languages used for simulation, analysis, and embedded work.</p>
+            <ul class="cap-cell-list">
+              <li>Python</li>
+              <li>MATLAB</li>
+              <li>C</li>
+              <li>C++</li>
+              <li>Bash</li>
+              <li>LaTeX</li>
+            </ul>
+          </div>
+
+          <div class="cap-cell">
+            <div class="cap-cell-head"><span class="cap-cell-id">CAP · 02</span></div>
+            <h3 class="cap-cell-title">Engineering Software</h3>
+            <p class="cap-cell-desc">Modeling, simulation, CAD, PCB, and data acquisition.</p>
+            <ul class="cap-cell-list">
+              <li>Simulink</li>
+              <li>SolidWorks</li>
+              <li>Fusion 360</li>
+              <li>Altium Designer</li>
+              <li>ANSYS Fluent</li>
+              <li>LabVIEW</li>
+              <li>OpenRocket</li>
+            </ul>
+          </div>
+
+          <div class="cap-cell">
+            <div class="cap-cell-head"><span class="cap-cell-id">CAP · 03</span></div>
+            <h3 class="cap-cell-title">Tools &amp; Systems</h3>
+            <p class="cap-cell-desc">Operating systems, networking, version control, lab practice.</p>
+            <ul class="cap-cell-list">
+              <li>Linux</li>
+              <li>Windows</li>
+              <li>Git / GitHub</li>
+              <li>Cisco IOS</li>
+              <li>Networking Basics</li>
+              <li>Tensile Testing</li>
+              <li>Technical Writing</li>
+              <li>Microsoft Office</li>
+              <li>Google Workspace</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== DIVIDER 03: TRAJECTORY ========================== -->
+    <div class="divider" aria-hidden="true">
+      <div class="divider-inner">
+        <div class="divider-line"></div>
+        <div class="divider-art">
+          <svg viewBox="0 0 280 64">
+            <!-- Ground line -->
+            <line x1="10" y1="52" x2="270" y2="52" />
+            <line x1="14" y1="50" x2="14" y2="54" />
+            <line x1="60" y1="50" x2="60" y2="54" />
+            <line x1="120" y1="50" x2="120" y2="54" />
+            <line x1="180" y1="50" x2="180" y2="54" />
+            <line x1="240" y1="50" x2="240" y2="54" />
+            <!-- Trajectory arc -->
+            <path d="M 10 52 Q 90 -10 270 30" class="acc" stroke-dasharray="3 3" />
+            <!-- Apogee marker -->
+            <circle cx="140" cy="10" r="3" class="dot" />
+            <text x="148" y="13" font-family="JetBrains Mono" font-size="6" fill="var(--fg-mute)" stroke="none">APOGEE</text>
+            <!-- Vehicle silhouette -->
+            <g transform="translate(120 4) rotate(50)">
+              <polygon points="0,-6 2,0 -2,0" class="acc" fill="var(--accent)" />
+              <rect x="-1.5" y="0" width="3" height="8" class="acc" fill="var(--accent)" />
+            </g>
+            <!-- Coords -->
+            <text x="10" y="62" font-family="JetBrains Mono" font-size="5" fill="var(--fg-mute)" stroke="none">T-00</text>
+            <text x="262" y="62" font-family="JetBrains Mono" font-size="5" fill="var(--fg-mute)" stroke="none" text-anchor="end">T+180</text>
+          </svg>
+          <span class="divider-label">Mission <span class="acc">·</span> Log <span class="acc">·</span> §03</span>
+        </div>
+        <div class="divider-line r"></div>
+      </div>
+    </div>
+
+    <!-- ========================== MISSIONS ========================== -->
+    <section id="missions" data-phase="MISSION LOG">
+      <div class="container">
+        <header class="section-head reveal">
+          <div class="section-num">§ 03 · Missions</div>
+          <div>
+            <h2 class="section-title">Active &amp; <em>archived missions</em>.</h2>
+            <p class="section-kicker">Selected projects, research, and coursework — most recent first.</p>
+          </div>
+        </header>
+
+        <div class="missions">
+
+          <!-- MISSION 01 -->
+          <article class="mission reveal">
+            <div class="mission-meta">
+              <span class="mission-id">M-006 · BLUESPEAR</span>
+              <span class="mission-status active"><span class="dot"></span>Active</span>
+              <span class="mission-dates">FEB 2026 — PRESENT</span>
+            </div>
+            <div class="mission-body">
+              <div class="mission-role">Avionics Lead · AIAA at UTA</div>
+              <h3 class="mission-title">Project <em>BlueSpear</em></h3>
+              <p class="mission-summary">
+                Student space launch vehicle. I lead a five-person avionics and
+                command-and-data-handling team through early-phase subsystem design,
+                component trade studies, and integration planning for the flight computer
+                and sensor stack.
+              </p>
+              <ul class="mission-points">
+                <li>Direct subsystem design for the flight computer and sensor architecture, with explicit interfaces to power, comms, and recovery.</li>
+                <li>Author interface control documents, hazard analyses, and risk assessments to support reliable design, integration, and test.</li>
+                <li>Coordinate trade studies on COTS flight-computer and sensor candidates against mass, power, telemetry, and reliability budgets.</li>
+              </ul>
+            </div>
+            <aside class="mission-aside">
+              <div class="mission-aside-block">
+                <span class="mission-aside-label">Scope</span>
+                <div class="mission-tags">
+                  <span>Avionics</span>
+                  <span>CDH</span>
+                  <span>Flight Computer</span>
+                  <span>ICDs</span>
+                  <span>Risk Assessment</span>
+                </div>
+              </div>
+              <a href="bluespear.html" class="mission-link">
+                Mission Brief <span class="arrow"></span>
+              </a>
+            </aside>
+          </article>
+
+          <!-- MISSION 02 -->
+          <article class="mission reveal">
+            <div class="mission-meta">
+              <span class="mission-id">M-005 · CUBESAT-FS</span>
+              <span class="mission-status complete"><span class="dot"></span>Complete</span>
+              <span class="mission-dates">JAN 2025 — DEC 2025</span>
+            </div>
+            <div class="mission-body">
+              <div class="mission-role">Communications Team · AIAA Project</div>
+              <h3 class="mission-title">CubeSat <em>Feasibility Study</em></h3>
+              <p class="mission-summary">
+                Year-long feasibility study for a small-satellite mission. I owned the
+                communications side — translating top-level mission intent into a
+                preliminary RF architecture and recommending a defensible COTS baseline.
+              </p>
+              <ul class="mission-points">
+                <li>Converted mission objectives into communications requirements: downlink data volume, contact pass timing, and link-budget drivers.</li>
+                <li>Conducted a structured trade study of COTS radios and antennas using vendor datasheets, with documented assumptions and rationale.</li>
+                <li>Produced subsystem-level interfaces and selection rationale to feed integrated mission-level design reviews.</li>
+              </ul>
+            </div>
+            <aside class="mission-aside">
+              <div class="mission-aside-block">
+                <span class="mission-aside-label">Scope</span>
+                <div class="mission-tags">
+                  <span>CubeSat</span>
+                  <span>Comms</span>
+                  <span>Trade Study</span>
+                  <span>Link Budget</span>
+                  <span>Requirements</span>
+                </div>
+              </div>
+              <a href="#" class="mission-link">
+                Mission Brief <span class="arrow"></span>
+              </a>
+            </aside>
+          </article>
+
+          <!-- MISSION 03 -->
+          <article class="mission reveal">
+            <div class="mission-meta">
+              <span class="mission-id">M-004 · L1-HPR</span>
+              <span class="mission-status complete"><span class="dot"></span>Flown</span>
+              <span class="mission-dates">NOV 2025</span>
+            </div>
+            <div class="mission-body">
+              <div class="mission-role">Personal Project — Solo</div>
+              <h3 class="mission-title">L1 <em>High-Power Rocket</em></h3>
+              <p class="mission-summary">
+                Designed, built, and flew a Level&nbsp;1 high-power rocket end-to-end. Used
+                CAD and OpenRocket to verify stability margin and configuration before
+                committing to fabrication, then carried the vehicle through assembly and
+                pre-flight checks to a clean launch.
+              </p>
+              <ul class="mission-points">
+                <li>Sized the vehicle in OpenRocket and SolidWorks, evaluating stability margin, CG/CP relationship, and motor selection against airframe constraints.</li>
+                <li>Selected components and executed mechanical assembly, recovery integration, and pre-flight fit checks.</li>
+                <li>Followed launch-day procedures end-to-end, including pad ops and safe recovery — closing the loop from design intent to flown hardware.</li>
+              </ul>
+            </div>
+            <aside class="mission-aside">
+              <div class="mission-aside-block">
+                <span class="mission-aside-label">Scope</span>
+                <div class="mission-tags">
+                  <span>HPR L1</span>
+                  <span>OpenRocket</span>
+                  <span>SolidWorks</span>
+                  <span>Recovery</span>
+                  <span>Fabrication</span>
+                </div>
+              </div>
+              <a href="#" class="mission-link">
+                Mission Brief <span class="arrow"></span>
+              </a>
+            </aside>
+          </article>
+
+          <!-- MISSION 04 -->
+          <article class="mission reveal">
+            <div class="mission-meta">
+              <span class="mission-id">M-003 · NANOLAB</span>
+              <span class="mission-status complete"><span class="dot"></span>Complete</span>
+              <span class="mission-dates">MAY 2025 — SEP 2025</span>
+            </div>
+            <div class="mission-body">
+              <div class="mission-role">Undergraduate Researcher · UTA Nanoscience Materials Lab</div>
+              <h3 class="mission-title">Composite Materials &amp; <em>RF Attenuation</em></h3>
+              <p class="mission-summary">
+                Summer research fabricating carbon-based and graphene-reinforced polymer
+                systems, plus a self-directed experiment on radio-frequency signal
+                attenuation through carbon composites — directly relevant to spacecraft
+                structural and antenna integration choices.
+              </p>
+              <ul class="mission-points">
+                <li>Fabricated carbon-based and graphene-reinforced polymer composites and supported development of experimental materials including graphene oxide and hydrogels.</li>
+                <li>Ran tensile tests and reduced the resulting data, maintaining detailed lab records and technical figures suitable for publication-grade documentation.</li>
+                <li>Designed and operated an in-house antenna experiment to characterize RF signal attenuation through carbon composite materials.</li>
+              </ul>
+            </div>
+            <aside class="mission-aside">
+              <div class="mission-aside-block">
+                <span class="mission-aside-label">Scope</span>
+                <div class="mission-tags">
+                  <span>Composites</span>
+                  <span>Graphene</span>
+                  <span>Tensile Testing</span>
+                  <span>RF Test</span>
+                  <span>Lab Records</span>
+                </div>
+              </div>
+              <a href="#" class="mission-link">
+                Mission Brief <span class="arrow"></span>
+              </a>
+            </aside>
+          </article>
+
+          <!-- MISSION 05 -->
+          <article class="mission reveal">
+            <div class="mission-meta">
+              <span class="mission-id">M-002 · MAE-3307</span>
+              <span class="mission-status complete"><span class="dot"></span>Complete</span>
+              <span class="mission-dates">JAN 2025 — MAY 2025</span>
+            </div>
+            <div class="mission-body">
+              <div class="mission-role">Coursework · Spacecraft Attitude Dynamics &amp; Control</div>
+              <h3 class="mission-title">6-DOF <em>Spacecraft Simulation</em></h3>
+              <p class="mission-summary">
+                Course-long set of MATLAB and Simulink projects covering orbital
+                propagation, attitude dynamics, and rendezvous — culminating in a
+                quaternion-based 6-DOF spacecraft model.
+              </p>
+              <ul class="mission-points">
+                <li>Built orbital-propagation, attitude-dynamics, and rendezvous models in MATLAB and Simulink with verification against analytical cases.</li>
+                <li>Implemented a quaternion-based 6-DOF spacecraft simulation, capturing both translational and rotational behavior.</li>
+                <li>Generated technical plots and analysis to evaluate vehicle response under representative mission scenarios.</li>
+              </ul>
+            </div>
+            <aside class="mission-aside">
+              <div class="mission-aside-block">
+                <span class="mission-aside-label">Scope</span>
+                <div class="mission-tags">
+                  <span>MATLAB</span>
+                  <span>Simulink</span>
+                  <span>Quaternions</span>
+                  <span>6-DOF</span>
+                  <span>Orbital Mechanics</span>
+                </div>
+              </div>
+              <a href="#" class="mission-link">
+                Mission Brief <span class="arrow"></span>
+              </a>
+            </aside>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== EDUCATION ========================== -->
+    <section id="education" data-phase="TRAINING RECORD">
+      <div class="container">
+        <header class="section-head reveal">
+          <div class="section-num">§ 04 · Education</div>
+          <div>
+            <h2 class="section-title">Training <em>history</em>.</h2>
+            <p class="section-kicker">Institutions, degrees, and minors on track.</p>
+          </div>
+        </header>
+
+        <div class="edu-grid reveal">
+          <article class="edu-card">
+            <div class="edu-head">
+              <span>UNIVERSITY · CURRENT</span>
+              <span class="accent">EXP. MAY 2027</span>
+            </div>
+            <h3 class="edu-school">University of Texas at Arlington</h3>
+            <p class="edu-degree">
+              <strong>B.S. Aerospace Engineering</strong><br>
+              <span class="acc">Minors</span> in Mechanical Engineering and Space Systems Engineering.
+            </p>
+          </article>
+
+          <article class="edu-card">
+            <div class="edu-head">
+              <span>COLLEGE · COMPLETE</span>
+              <span class="accent">GRAD. MAY 2023</span>
+            </div>
+            <h3 class="edu-school">South Texas College</h3>
+            <p class="edu-degree">
+              <strong>Associate of Science in Engineering</strong><br>
+              Foundational coursework in math, physics, and engineering science.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== COURSEWORK ========================== -->
+    <section id="coursework" data-phase="COURSEWORK">
+      <div class="container">
+        <header class="section-head reveal">
+          <div class="section-num">§ 05 · Coursework</div>
+          <div>
+            <h2 class="section-title">Selected <em>coursework</em>.</h2>
+            <p class="section-kicker">Courses most relevant to flight systems, dynamics, and design.</p>
+          </div>
+        </header>
+
+        <div class="course-grid reveal">
+
+          <!-- Confirmed course -->
+          <div class="course-row">
+            <span class="course-code">MAE 3307</span>
+            <span class="course-name">Spacecraft Attitude Dynamics &amp; Control</span>
+            <span class="course-status done">Done</span>
+          </div>
+
+          <!-- Placeholder rows — replace codes / names / status -->
+          <div class="course-row placeholder">
+            <span class="course-code">MAE ----</span>
+            <span class="course-name">Aerodynamics — <em>// fill in</em></span>
+            <span class="course-status">TBD</span>
+          </div>
+          <div class="course-row placeholder">
+            <span class="course-code">MAE ----</span>
+            <span class="course-name">Compressible Flow / Gas Dynamics — <em>// fill in</em></span>
+            <span class="course-status">TBD</span>
+          </div>
+          <div class="course-row placeholder">
+            <span class="course-code">MAE ----</span>
+            <span class="course-name">Orbital Mechanics — <em>// fill in</em></span>
+            <span class="course-status">TBD</span>
+          </div>
+          <div class="course-row placeholder">
+            <span class="course-code">MAE ----</span>
+            <span class="course-name">Rocket Propulsion — <em>// fill in</em></span>
+            <span class="course-status">TBD</span>
+          </div>
+          <div class="course-row placeholder">
+            <span class="course-code">MAE ----</span>
+            <span class="course-name">Aerospace Structures — <em>// fill in</em></span>
+            <span class="course-status">TBD</span>
+          </div>
+          <div class="course-row placeholder">
+            <span class="course-code">MAE ----</span>
+            <span class="course-name">Flight Dynamics &amp; Controls — <em>// fill in</em></span>
+            <span class="course-status">TBD</span>
+          </div>
+          <div class="course-row placeholder">
+            <span class="course-code">MAE ----</span>
+            <span class="course-name">Thermodynamics — <em>// fill in</em></span>
+            <span class="course-status">TBD</span>
+          </div>
+
+        </div>
+
+        <p style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-mute); margin-top: 20px;">
+          // Edit course codes, names, and status (Done / Now / Next) in your repo to fill out.
+        </p>
+      </div>
+    </section>
+
+    <!-- ========================== LEADERSHIP ========================== -->
+    <section id="leadership" data-phase="SERVICE RECORD">
+      <div class="container">
+        <header class="section-head reveal">
+          <div class="section-num">§ 06 · Service</div>
+          <div>
+            <h2 class="section-title">Leadership &amp; <em>service record</em>.</h2>
+            <p class="section-kicker">Roles held in student organizations and competitive teams.</p>
+          </div>
+        </header>
+
+        <div class="lead-list reveal">
+          <div class="lead-item">
+            <div>
+              <h3 class="lead-org">AIAA at UTA</h3>
+              <p class="lead-role">Professional Events Coordinator · Officer</p>
+            </div>
+            <p class="lead-body">
+              Coordinate professional speaker events for a 530+ member aerospace
+              organization, working with a 20-officer leadership team to drive industry
+              engagement and student professional development.
+            </p>
+            <div class="lead-dates">FEB 2024 — PRESENT</div>
+          </div>
+
+          <div class="lead-item">
+            <div>
+              <h3 class="lead-org">STC Cybersecurity Club</h3>
+              <p class="lead-role">President</p>
+            </div>
+            <p class="lead-body">
+              Led four CyberPatriot competition teams through national rounds, organized
+              Capture-the-Flag prep, and built hands-on skill with Windows, Linux, Cisco
+              IOS, and core networking.
+            </p>
+            <div class="lead-dates">JAN 2018 — MAR 2020</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== DIVIDER 04: ANTENNA ========================== -->
+    <div class="divider" aria-hidden="true">
+      <div class="divider-inner">
+        <div class="divider-line"></div>
+        <div class="divider-art">
+          <svg viewBox="0 0 280 64">
+            <!-- Ground -->
+            <line x1="10" y1="54" x2="270" y2="54" />
+            <!-- Antenna mast -->
+            <line x1="140" y1="54" x2="140" y2="20" class="acc" />
+            <polygon points="140,20 134,28 146,28" class="acc" fill="var(--accent)" />
+            <line x1="130" y1="30" x2="150" y2="30" class="acc" />
+            <line x1="128" y1="34" x2="152" y2="34" class="acc" />
+            <!-- Signal waves -->
+            <path class="signal-wave"     d="M 140 22 A 30 30 0 0 1 170 52" />
+            <path class="signal-wave w2"  d="M 140 22 A 45 45 0 0 1 185 67" />
+            <path class="signal-wave w3"  d="M 140 22 A 60 60 0 0 1 200 82" />
+            <path class="signal-wave"     d="M 140 22 A 30 30 0 0 0 110 52" />
+            <path class="signal-wave w2"  d="M 140 22 A 45 45 0 0 0 95 67" />
+            <path class="signal-wave w3"  d="M 140 22 A 60 60 0 0 0 80 82" />
+            <!-- Tick scale -->
+            <line x1="14" y1="52" x2="14" y2="56" />
+            <line x1="40" y1="52" x2="40" y2="56" />
+            <line x1="240" y1="52" x2="240" y2="56" />
+            <line x1="266" y1="52" x2="266" y2="56" />
+            <!-- Labels -->
+            <text x="14" y="62" font-family="JetBrains Mono" font-size="5" fill="var(--fg-mute)" stroke="none">GND</text>
+            <text x="266" y="62" font-family="JetBrains Mono" font-size="5" fill="var(--fg-mute)" stroke="none" text-anchor="end">RX</text>
+          </svg>
+          <span class="divider-label">Ground Station <span class="acc">·</span> Open Channel <span class="acc">·</span> §07</span>
+        </div>
+        <div class="divider-line r"></div>
+      </div>
+    </div>
+
+    <!-- ========================== CONTACT ========================== -->
+    <section id="contact" data-phase="GROUND STATION">
+      <div class="container">
+        <header class="section-head reveal">
+          <div class="section-num">§ 07 · Contact</div>
+          <div>
+            <h2 class="section-title">Open a <em>channel</em>.</h2>
+            <p class="section-kicker">Recruiting · projects · collaboration · technical questions.</p>
+          </div>
+        </header>
+
+        <div class="contact-wrap reveal">
+          <h3 class="contact-title">
+            Let's talk <em>flight hardware.</em>
+          </h3>
+
+          <div class="contact-channels">
+            <a class="contact-channel" href="mailto:mr.christianibarra@gmail.com">
+              <span class="ch-label">Email</span>
+              <span class="ch-value">mr.christianibarra@gmail.com</span>
+              <span class="ch-arrow">→</span>
+            </a>
+            <a class="contact-channel" href="https://linkedin.com/in/ibarra-christian" target="_blank" rel="noopener">
+              <span class="ch-label">LinkedIn</span>
+              <span class="ch-value">linkedin.com/in/ibarra-christian</span>
+              <span class="ch-arrow">→</span>
+            </a>
+            <a class="contact-channel" href="#">
+              <span class="ch-label">GitHub</span>
+              <span class="ch-value">github.com/&nbsp;— add handle</span>
+              <span class="ch-arrow">→</span>
+            </a>
+            <a class="contact-channel" href="tel:+19566055385">
+              <span class="ch-label">Voice</span>
+              <span class="ch-value">+1 (956) 605-5385</span>
+              <span class="ch-arrow">→</span>
+            </a>
+            <a class="contact-channel" href="#">
+              <span class="ch-label">Resume</span>
+              <span class="ch-value">/Ibarra_Christian.pdf</span>
+              <span class="ch-arrow">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================== FOOTER ========================== -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div>© 2026 · Christian Ibarra</div>
+        <div>Endurance Aero Labs · ARLINGTON · TEXAS</div>
+        <div>Last Update · <span id="ts">—</span></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ----- timestamp footer
+    const ts = document.getElementById('ts');
+    if (ts) {
+      const d = new Date();
+      const pad = n => String(n).padStart(2, '0');
+      ts.textContent = `${d.getUTCFullYear()}.${pad(d.getUTCMonth()+1)}.${pad(d.getUTCDate())} · ${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())} UTC`;
+    }
+
+    // ----- scroll reveal
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // ----- mission diamond activation (separate observer, doesn't unobserve so toggles)
+    const missionIO = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('in');
+      });
+    }, { threshold: 0.25 });
+    document.querySelectorAll('.mission').forEach(el => missionIO.observe(el));
+
+    // ----- Mission HUD
+    const hud      = document.getElementById('hud');
+    const hudT     = document.getElementById('hud-t');
+    const hudAlt   = document.getElementById('hud-alt');
+    const hudPhase = document.getElementById('hud-phase');
+    const hudBar   = document.getElementById('hud-bar');
+
+    // T+ timer
+    const start = Date.now();
+    function tick() {
+      const s = Math.floor((Date.now() - start) / 1000);
+      const h = String(Math.floor(s / 3600)).padStart(2, '0');
+      const m = String(Math.floor((s % 3600) / 60)).padStart(2, '0');
+      const sec = String(s % 60).padStart(2, '0');
+      hudT.textContent = `${h}:${m}:${sec}`;
+    }
+    setInterval(tick, 1000);
+    tick();
+
+    // Fade in HUD after slight delay
+    setTimeout(() => hud.classList.add('in'), 600);
+
+    // Scroll-driven ALT, phase, bar
+    const phaseSections = Array.from(document.querySelectorAll('[data-phase]'));
+    function updateHud() {
+      const max = document.body.scrollHeight - window.innerHeight;
+      const pct = Math.min(100, Math.max(0, (window.scrollY / max) * 100));
+      hudAlt.textContent = `${pct.toFixed(0).padStart(3, '0')}%`;
+      hudBar.style.width = `${pct}%`;
+
+      // Determine current phase by which section is most prominent
+      const mid = window.scrollY + window.innerHeight * 0.4;
+      let current = phaseSections[0];
+      for (const s of phaseSections) {
+        const top = s.offsetTop;
+        if (top <= mid) current = s;
+      }
+      if (current) {
+        const phase = current.getAttribute('data-phase');
+        if (hudPhase.textContent !== phase) hudPhase.textContent = phase;
+      }
+    }
+    updateHud();
+    window.addEventListener('scroll', updateHud, { passive: true });
+    window.addEventListener('resize', updateHud);
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operator File — Christian Ibarra · Endurance Aero Labs</title>
+  <meta name="description" content="Full operator profile for Christian Ibarra — background, focus, and engineering philosophy." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="shared.css">
+
+  <style>
+    /* PAGE-SPECIFIC: about */
+    .page-hero {
+      padding: 160px 0 60px;
+      position: relative;
+    }
+    .page-hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 32px;
+      font-weight: 500;
+    }
+    .page-hero-eyebrow::before {
+      content: ""; width: 32px; height: 1px; background: var(--accent);
+    }
+    .page-hero-title {
+      font-family: var(--serif);
+      font-size: clamp(56px, 10vw, 144px);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      font-weight: 400;
+      margin: 0 0 24px;
+    }
+    .page-hero-title em { font-style: italic; color: var(--accent); }
+
+    .about-hero-grid {
+      display: grid;
+      grid-template-columns: 5fr 4fr;
+      gap: 80px;
+      align-items: start;
+      padding: 60px 0 100px;
+    }
+
+    /* Portrait frame */
+    .portrait-wrap {
+      position: sticky; top: 100px;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .portrait {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      border: 1px solid var(--rule);
+      background: var(--bg-soft);
+      overflow: hidden;
+    }
+    .portrait img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: grayscale(0.15) contrast(1.02);
+      transition: filter .5s ease, transform .8s ease;
+    }
+    .portrait:hover img { filter: grayscale(0) contrast(1.05); transform: scale(1.02); }
+
+    .portrait-placeholder {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 12px;
+      color: var(--fg-mute);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 24px;
+    }
+    .portrait-placeholder svg { width: 48px; height: 48px; opacity: .5; }
+    .portrait-placeholder strong { color: var(--accent); font-weight: 600; }
+
+    /* Corner registration marks on portrait */
+    .portrait::before, .portrait::after,
+    .portrait > .corner-tl, .portrait > .corner-br {
+      content: "";
+      position: absolute;
+      width: 16px; height: 16px;
+      border-color: var(--accent);
+      border-style: solid;
+      pointer-events: none;
+    }
+    .portrait::before { top: 8px; left: 8px;  border-width: 1px 0 0 1px; }
+    .portrait::after  { bottom: 8px; right: 8px; border-width: 0 1px 1px 0; }
+
+    .portrait-meta {
+      display: flex; justify-content: space-between;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--fg-mute);
+      padding: 0 4px;
+      font-weight: 500;
+    }
+    .portrait-meta .acc { color: var(--accent); }
+
+    /* Body content */
+    .about-content .lede {
+      font-family: var(--serif);
+      font-size: 32px;
+      line-height: 1.3;
+      color: var(--fg);
+      font-weight: 400;
+      margin: 0 0 32px;
+    }
+    .about-content .lede em { font-style: italic; color: var(--accent); }
+    .about-content p {
+      font-size: 17px;
+      line-height: 1.75;
+      color: var(--fg-soft);
+      margin: 0 0 22px;
+      font-weight: 400;
+    }
+    .about-content p strong { color: var(--fg); font-weight: 600; }
+    .about-content h3 {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 48px 0 16px;
+      font-weight: 600;
+      padding-top: 24px;
+      border-top: 1px solid var(--rule);
+    }
+
+    /* Pull quote */
+    .pull {
+      margin: 40px 0;
+      padding: 28px 32px;
+      border-left: 2px solid var(--accent);
+      background: var(--bg-soft);
+      font-family: var(--serif);
+      font-size: 24px;
+      line-height: 1.4;
+      color: var(--fg);
+      font-style: italic;
+    }
+    .pull-cite {
+      display: block;
+      margin-top: 14px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--fg-mute);
+      font-style: normal;
+      font-weight: 500;
+    }
+
+    /* Vitals table - full width section */
+    .vitals {
+      padding: 80px 0;
+      border-top: 1px solid var(--rule);
+    }
+    .vitals-head {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 32px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--fg-mute);
+      font-weight: 500;
+    }
+    .vitals-head .vitals-title {
+      font-family: var(--serif);
+      font-size: 44px;
+      line-height: 1;
+      color: var(--fg);
+      letter-spacing: -0.01em;
+      text-transform: none;
+    }
+    .vitals-head .vitals-title em { font-style: italic; color: var(--accent); }
+
+    .vitals-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+    .vital {
+      background: var(--bg);
+      padding: 28px 24px;
+      display: flex; flex-direction: column; gap: 10px;
+      min-height: 140px;
+      transition: background .25s ease;
+    }
+    .vital:hover { background: var(--bg-soft); }
+    .vital-id {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .vital-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--fg-mute);
+      font-weight: 500;
+    }
+    .vital-value {
+      font-family: var(--serif);
+      font-size: 28px;
+      line-height: 1.15;
+      color: var(--fg);
+      font-weight: 400;
+    }
+    .vital-value em { font-style: italic; color: var(--accent); }
+    .vital-sub {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--fg-soft);
+      letter-spacing: 0.04em;
+      font-weight: 400;
+    }
+
+    @media (max-width: 980px) {
+      .about-hero-grid { grid-template-columns: 1fr; gap: 48px; }
+      .portrait-wrap { position: static; max-width: 420px; }
+      .vitals-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .vitals-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Phones: tighten the about hero */
+    @media (max-width: 760px) {
+      .page-hero { padding: 110px 0 24px; }
+      .page-hero-title { font-size: clamp(48px, 14vw, 96px); }
+      .about-hero-grid { padding: 40px 0 60px; gap: 32px; }
+      .portrait-wrap { max-width: 100%; }
+      .about-content .lede { font-size: 24px; }
+      .about-content p { font-size: 16px; }
+      .pull { padding: 22px 24px; font-size: 20px; margin: 28px 0; }
+      .vitals { padding: 50px 0; }
+      .vitals-head .vitals-title,
+      .vitals .vitals-title { font-size: 36px !important; }
+      .vital { padding: 22px 18px; min-height: 0; }
+      .vital-value { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================== NAV ========================== -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="brand" aria-label="Endurance Aero Labs">
+        <span class="brand-mark"><span></span></span>
+        Endurance&nbsp;Aero&nbsp;Labs
+      </a>
+      <div class="nav-links">
+        <a href="about.html" class="active">Operator</a>
+        <a href="index.html#capabilities">Capabilities</a>
+        <div class="nav-dropdown">
+          <a href="index.html#missions" class="nav-dropdown-trigger">Missions <span class="caret">▾</span></a>
+          <div class="nav-dropdown-menu">
+            <a href="bluespear.html"><span class="dd-id">M-006</span><span class="dd-name">BlueSpear · Avionics</span></a>
+            <a href="mission-template.html"><span class="dd-id">M-005</span><span class="dd-name">CubeSat Feasibility</span></a>
+            <a href="mission-template.html"><span class="dd-id">M-004</span><span class="dd-name">L1 High-Power Rocket</span></a>
+            <a href="mission-template.html"><span class="dd-id">M-003</span><span class="dd-name">Composites &amp; RF</span></a>
+            <a href="mission-template.html"><span class="dd-id">M-002</span><span class="dd-name">6-DOF Sim</span></a>
+            <div class="nav-dropdown-sep"></div>
+            <a href="index.html#missions" class="dd-all">All missions →</a>
+          </div>
+        </div>
+        <a href="index.html#education">Training</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+      <div class="nav-status">
+        <span class="status-dot"></span>
+        Available · Summer&nbsp;2026
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+
+    <section class="page-hero">
+      <div class="container">
+        <div class="page-hero-eyebrow reveal">FILE · OP-CIB · OPERATOR PROFILE</div>
+        <h1 class="page-hero-title reveal">
+          The <em>operator</em>.
+        </h1>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="about-hero-grid">
+
+          <!-- LEFT: Bio / narrative -->
+          <div class="about-content reveal">
+            <p class="lede">
+              I build the <em>boxes that have to work</em> the moment power goes on — the
+              avionics, the flight computer, the sensor stack between the bus and the rest
+              of the spacecraft.
+            </p>
+
+            <p>
+              I'm a junior aerospace engineering student at the
+              <strong>University of Texas at Arlington</strong>, on track to graduate in May 2027
+              with a B.S. in Aerospace Engineering and minors in Mechanical Engineering and
+              Space Systems Engineering. Before UTA, I earned an Associate of Science in
+              Engineering from South Texas College in 2023.
+            </p>
+
+            <p>
+              I came up doing cybersecurity in high school — running a four-team CyberPatriot
+              club through national competitions — which is where I picked up the habit of
+              <strong>reading systems carefully, troubleshooting under time pressure, and
+              actually documenting what I changed.</strong> When I switched into aerospace,
+              that posture transferred straight into avionics and integration work.
+            </p>
+
+            <p class="pull">
+              "Aerospace is the field where the hardware has one shot to be right.
+              I want to be the person who made sure it was."
+              <span class="pull-cite">— Operating philosophy</span>
+            </p>
+
+            <h3>What I'm working on now</h3>
+            <p>
+              I'm the <strong>Avionics Lead</strong> for <strong>Project BlueSpear</strong>,
+              AIAA at UTA's student space launch vehicle. I run a five-person avionics and
+              command-and-data-handling team, owning subsystem design for the flight computer
+              and sensor stack, interface control documentation, and the hazard / risk
+              picture for integration and test.
+            </p>
+            <p>
+              On top of that I'm <strong>Professional Events Coordinator</strong> for AIAA at
+              UTA — a 530+ member organization — where I work with a 20-officer leadership
+              team to bring in industry speakers and run professional-development programming
+              for the chapter.
+            </p>
+
+            <h3>How I got here</h3>
+            <p>
+              Over the past 18 months I've stacked up the kind of experience that I think
+              actually maps to a real aerospace job: I owned the comms subsystem for a
+              year-long <strong>CubeSat feasibility study</strong>, fabricated graphene-reinforced
+              polymer composites in UTA's nanoscience materials lab while running my own
+              <strong>RF attenuation experiment</strong>, designed and flew a Level&nbsp;1
+              <strong>high-power rocket</strong> solo, and built quaternion-based 6-DOF
+              spacecraft models in MATLAB and Simulink for coursework.
+            </p>
+            <p>
+              I move comfortably between hardware and software — composites in the lab one
+              week, link budgets and trade studies the next, then back to Simulink to bring
+              up a sim. I'm <strong>fluent in Spanish</strong>, a <strong>U.S. citizen</strong>
+              (so I'm clean on ITAR / export-control work), and I'm <strong>open to relocating</strong>
+              for the right opportunity.
+            </p>
+
+            <h3>What I'm looking for</h3>
+            <p>
+              A <strong>Summer&nbsp;2026 internship</strong> on flight hardware — ideally in
+              avionics, GNC, integration &amp; test, or systems engineering on launch
+              vehicles, spacecraft, or in-space systems. Companies I'm most excited about:
+              <strong>SpaceX, Firefly Aerospace, Lockheed Martin Space, Intuitive Machines,
+              Blue Origin</strong>. If you're hiring on something hard, I want to hear about it.
+            </p>
+          </div>
+
+          <!-- RIGHT: Portrait + meta -->
+          <aside class="portrait-wrap reveal">
+            <figure class="portrait">
+              <!--
+                ===== REPLACE THIS BLOCK WITH YOUR PHOTO =====
+                Drop a 4:5 portrait into your repo as /assets/portrait.jpg
+                (recommend 1200x1500 px, slightly desaturated, clean background)
+                then uncomment the <img> line below and delete the placeholder div.
+              -->
+              <img src="assets/portrait.jpg" alt="Christian Ibarra" />
+            </figure>
+            <div class="portrait-meta">
+              <span>SUBJECT <span class="acc">·</span> CIB</span>
+              <span>FRAME <span class="acc">·</span> 04/2026</span>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== VITALS ========================== -->
+    <section class="vitals">
+      <div class="container">
+        <div class="vitals-head reveal">
+          <span>§ 02 · VITALS</span>
+          <span>OP-CIB</span>
+        </div>
+        <h2 class="vitals-title reveal" style="font-family: var(--serif); font-size: clamp(36px,5vw,56px); margin: 0 0 40px; font-weight: 400; letter-spacing: -0.015em;">
+          At a <em style="color: var(--accent); font-style: italic;">glance</em>.
+        </h2>
+
+        <div class="vitals-grid reveal">
+          <div class="vital">
+            <span class="vital-id">VTL · 01</span>
+            <span class="vital-label">Status</span>
+            <span class="vital-value"><em>Available</em></span>
+            <span class="vital-sub">For Summer 2026 internships</span>
+          </div>
+          <div class="vital">
+            <span class="vital-id">VTL · 02</span>
+            <span class="vital-label">Citizenship</span>
+            <span class="vital-value">U.S. Citizen</span>
+            <span class="vital-sub">ITAR / export-control eligible</span>
+          </div>
+          <div class="vital">
+            <span class="vital-id">VTL · 03</span>
+            <span class="vital-label">Languages</span>
+            <span class="vital-value">EN · ES</span>
+            <span class="vital-sub">English (native) · Spanish (fluent)</span>
+          </div>
+          <div class="vital">
+            <span class="vital-id">VTL · 04</span>
+            <span class="vital-label">Based</span>
+            <span class="vital-value">Arlington, TX</span>
+            <span class="vital-sub">Willing to relocate</span>
+          </div>
+          <div class="vital">
+            <span class="vital-id">VTL · 05</span>
+            <span class="vital-label">Graduation</span>
+            <span class="vital-value">May 2027</span>
+            <span class="vital-sub">B.S. Aerospace Engineering · UTA</span>
+          </div>
+          <div class="vital">
+            <span class="vital-id">VTL · 06</span>
+            <span class="vital-label">Focus</span>
+            <span class="vital-value"><em>Avionics</em></span>
+            <span class="vital-sub">CDH · GNC · I&amp;T · Systems</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================== FOOTER ========================== -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div>© 2026 · Christian Ibarra</div>
+        <div>Endurance Aero Labs · ARLINGTON · TEXAS</div>
+        <div>Last Update · <span id="ts">—</span></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="shared.js"></script>
+</body>
+</html>
