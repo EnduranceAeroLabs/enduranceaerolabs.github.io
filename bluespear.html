@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mission Brief · M-006 BlueSpear — Endurance Aero Labs</title>
-  <meta name="description" content="Mission brief for Project BlueSpear — AIAA at UTA student space launch vehicle targeting the Kármán line. CDH lead role, subsystem architecture decisions, hazard assessment, and integration planning." />
+  <meta name="description" content="Mission brief for Project BlueSpear — AIAA at UTA student space launch vehicle targeting the Kármán line. Avionics and CDH lead role, flight-systems architecture decisions, documentation control, hazard assessment, and cross-subsystem integration planning." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,7 +28,7 @@
         <div class="nav-dropdown">
           <a href="index.html#missions" class="nav-dropdown-trigger active">Missions <span class="caret">▾</span></a>
           <div class="nav-dropdown-menu">
-            <a href="bluespear.html"><span class="dd-id">M-006</span><span class="dd-name">BlueSpear · CDH</span></a>
+            <a href="bluespear.html"><span class="dd-id">M-006</span><span class="dd-name">BlueSpear · Avionics/CDH</span></a>
             <a href="mission-template.html"><span class="dd-id">M-005</span><span class="dd-name">CubeSat Feasibility</span></a>
             <a href="mission-template.html"><span class="dd-id">M-004</span><span class="dd-name">L1 High-Power Rocket</span></a>
             <a href="mission-template.html"><span class="dd-id">M-003</span><span class="dd-name">Composites &amp; RF</span></a>
@@ -68,7 +68,7 @@
               <span class="status"><span class="dot"></span>Active</span>
             </div>
             <h1 class="brief-title">Project <em>BlueSpear</em></h1>
-            <p class="brief-sub">Student Space Launch Vehicle · Command &amp; Data Handling Subsystem</p>
+            <p class="brief-sub">Student Space Launch Vehicle · Avionics &amp; Command/Data Handling</p>
           </div>
 
           <div class="brief-mark" aria-hidden="true">
@@ -99,7 +99,7 @@
         <div class="brief-facts reveal">
           <div class="brief-fact">
             <span class="brief-fact-label">Role</span>
-            <span class="brief-fact-value acc">CDH Lead</span>
+            <span class="brief-fact-value acc">Avionics &amp; CDH Lead</span>
           </div>
           <div class="brief-fact">
             <span class="brief-fact-label">Org</span>
@@ -115,7 +115,7 @@
           </div>
           <div class="brief-fact">
             <span class="brief-fact-label">Phase</span>
-            <span class="brief-fact-value acc">Architecture Trades</span>
+            <span class="brief-fact-value acc">Reqs + Architecture</span>
           </div>
         </div>
       </div>
@@ -128,7 +128,7 @@
           <div class="brief-section-num">§ 01 · Overview</div>
           <div>
             <h2 class="brief-section-title">Mission <em>summary</em>.</h2>
-            <p class="brief-section-kicker">What we're building, what CDH owns, and what has actually been completed.</p>
+            <p class="brief-section-kicker">What we're building, what my formal subsystem owns, and where the work extends into vehicle-level integration.</p>
           </div>
         </header>
 
@@ -141,18 +141,21 @@
               100 km above mean sea level — with engineering margins.
             </p>
             <p>
-              I serve as the <strong>Command and Data Handling (CDH) Lead</strong>,
-              leading a five-member subsystem team through early architecture definition,
-              requirements cleanup, decision matrices, and cross-subsystem interface planning.
-              The current work is intentionally before PCB layout: requirements, interfaces,
-              hazards, data paths, power needs, and architecture decisions have to close
-              before a board is worth designing.
+              I serve as the <strong>Avionics &amp; Command and Data Handling (CDH) Lead</strong>.
+              Formally, CDH owns onboard computing, command/data paths, logging, and
+              subsystem data interfaces. In practice, the work is broader than a narrow
+              CDH box: I am helping define the early avionics architecture, requirements
+              flowdown, power-interface needs, data paths, sensor coverage, documentation
+              control, hazard controls, and integration logic before the team commits to
+              a specific board or PCB layout.
             </p>
             <p>
-              The main impact so far is that CDH has moved from a vague “pick a flight
-              computer” problem into a traceable engineering package: a working requirements
-              baseline, a document-control protocol, an initial hazard assessment, and
-              architecture decision matrices for the flight computer and onboard data logging.
+              The main impact so far is that the avionics problem has moved from “pick a flight
+              computer” into a traceable engineering package: a working requirements baseline,
+              a document-control protocol, an initial hazard assessment, architecture decision
+              matrices for the flight computer and onboard data logging, and a clearer set of
+              questions for Power Production and Storage, Communications, Structures, Thermal
+              Determination and Control, Propulsion, and recovery-related interfaces.
             </p>
           </div>
 
@@ -161,8 +164,8 @@
               <div class="brief-aside-label">At a Glance</div>
               <ul class="brief-aside-list">
                 <li>Mission Target <span class="acc">·</span> &gt;100 km MSL</li>
-                <li>Subsystem <span class="acc">·</span> CDH</li>
-                <li>Role <span class="acc">·</span> CDH Lead</li>
+                <li>Subsystem <span class="acc">·</span> Avionics / CDH</li>
+                <li>Role <span class="acc">·</span> Avionics &amp; CDH Lead</li>
                 <li>Team Size <span class="acc">·</span> 5</li>
                 <li>Window <span class="acc">·</span> Feb 2026 — Present</li>
               </ul>
@@ -170,7 +173,7 @@
             <div class="brief-aside-block">
               <div class="brief-aside-label">Current Baseline</div>
               <ul class="brief-aside-list">
-                <li>Custom primary CDH board</li>
+                <li>Custom primary avionics/CDH board</li>
                 <li>Independent COTS backup</li>
                 <li>Full-data + core-data logging</li>
                 <li>Storage technology TBR</li>
@@ -188,7 +191,7 @@
         <header class="brief-section-head reveal">
           <div class="brief-section-num">§ 02 · Objectives</div>
           <div>
-            <h2 class="brief-section-title">CDH <em>objectives</em>.</h2>
+            <h2 class="brief-section-title">Avionics &amp; CDH <em>objectives</em>.</h2>
             <p class="brief-section-kicker">Near-term subsystem goals tied to reviewable outputs.</p>
           </div>
         </header>
@@ -196,11 +199,11 @@
         <div class="brief-two reveal">
           <div class="brief-prose">
             <ul>
-              <li><strong>OBJ-01 · Requirements baseline.</strong> Maintain a CDH requirements baseline that is specific enough to drive trade studies, but not overfit to components that have not been selected yet.</li>
-              <li><strong>OBJ-02 · Flight-computer architecture.</strong> Use a decision matrix to select a preliminary architecture rather than jumping directly to a single board or vendor.</li>
-              <li><strong>OBJ-03 · Data logging architecture.</strong> Separate full-resolution engineering data from minimum mission-critical data so that post-flight reconstruction does not depend on one device.</li>
-              <li><strong>OBJ-04 · Cross-subsystem interfaces.</strong> Define what CDH needs from Power Production and Storage, Communications, Structures, Thermal Determination and Control, Propulsion, and Recovery-related functions before hardware layout.</li>
-              <li><strong>OBJ-05 · Safety and verification.</strong> Convert CDH hazards into controls that can be inspected, tested, demonstrated, or verified before flight.</li>
+              <li><strong>OBJ-01 · Requirements flowdown.</strong> Maintain an avionics/CDH requirements baseline that is specific enough to drive architecture decisions, but not overfit to components that have not been selected yet.</li>
+              <li><strong>OBJ-02 · Flight-computer architecture.</strong> Use decision matrices to define the control, backup, logging, and telemetry architecture before jumping directly to a single board or vendor.</li>
+              <li><strong>OBJ-03 · Data architecture.</strong> Separate full-resolution engineering data from minimum mission-critical data so post-flight reconstruction does not depend on one device, one bus, or one storage path.</li>
+              <li><strong>OBJ-04 · Cross-subsystem interfaces.</strong> Define what avionics/CDH needs from Power Production and Storage, Communications, Structures, Thermal Determination and Control, Propulsion, and recovery-related functions before hardware layout.</li>
+              <li><strong>OBJ-05 · Safety and verification.</strong> Convert avionics/CDH hazards into controls that can be inspected, tested, demonstrated, or verified before flight.</li>
             </ul>
           </div>
 
@@ -236,14 +239,14 @@
         <header class="brief-section-head reveal">
           <div class="brief-section-num">§ 03 · Architecture</div>
           <div>
-            <h2 class="brief-section-title">CDH <em>architecture</em>.</h2>
+            <h2 class="brief-section-title">Avionics/CDH <em>architecture</em>.</h2>
             <p class="brief-section-kicker">Preliminary architecture baseline from the current decision matrices.</p>
           </div>
         </header>
 
         <div class="arch-block reveal">
           <div class="arch-block-head">
-            <span class="arch-block-title">FIG · 01 — BlueSpear CDH Architecture Baseline</span>
+            <span class="arch-block-title">FIG · 01 — BlueSpear Avionics/CDH Architecture Baseline</span>
             <span class="arch-block-meta">REV B · PRE-PDR</span>
           </div>
 
@@ -267,7 +270,7 @@
                 .line-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: var(--fg-mute); letter-spacing: 0.08em; }
               </style>
 
-              <text x="20" y="22" class="box-id">FIG · 01 / BLUESPEAR CDH · ARCHITECTURE BASELINE</text>
+              <text x="20" y="22" class="box-id">FIG · 01 / BLUESPEAR AVIONICS-CDH · ARCHITECTURE BASELINE</text>
               <line x1="20" y1="30" x2="880" y2="30" stroke="var(--rule)" stroke-width="1" />
 
               <!-- POWER -->
@@ -279,15 +282,15 @@
 
               <!-- PRIMARY CDH -->
               <rect class="box-acc" x="355" y="145" width="205" height="110" />
-              <text x="368" y="168" class="box-id">CDH · PRIMARY</text>
-              <text x="368" y="190" class="box-label">Custom CDH Board</text>
+              <text x="368" y="168" class="box-id">AV/CDH · PRIMARY</text>
+              <text x="368" y="190" class="box-label">Custom Avionics Board</text>
               <text x="368" y="208" class="box-sub">FULL DATA LOGGER</text>
               <text x="368" y="222" class="box-sub">STATE / TIMING LOGIC</text>
               <text x="368" y="236" class="box-sub">SUBSYSTEM INTERFACES</text>
 
               <!-- BACKUP -->
               <rect class="box" x="355" y="295" width="205" height="86" />
-              <text x="368" y="318" class="box-id">CDH · BACKUP</text>
+              <text x="368" y="318" class="box-id">AV/CDH · BACKUP</text>
               <text x="368" y="340" class="box-label">Independent COTS Unit</text>
               <text x="368" y="358" class="box-sub">CORE DATA LOGGER</text>
               <text x="368" y="372" class="box-sub">INDEPENDENT FALLBACK</text>
@@ -368,9 +371,10 @@
           </div>
 
           <div class="arch-caption">
-            <span class="acc">FIG · 01</span> · Preliminary CDH architecture. The selected baseline is a
-            custom primary CDH board with an independent COTS backup. Storage technology, exact sensor
-            part numbers, and released interface control documents remain open items before PCB layout.
+            <span class="acc">FIG · 01</span> · Preliminary avionics/CDH architecture. The selected baseline is a
+            custom primary avionics board with an independent COTS backup. Storage technology, exact sensor
+            part numbers, power budgets, connector/pinout definitions, and released interface control documents
+            remain open items before PCB layout.
           </div>
         </div>
       </div>
@@ -406,8 +410,8 @@
             <tbody>
               <tr class="selected">
                 <td class="candidate">Flight Computer Architecture</td>
-                <td><strong style="color: var(--accent);">Custom primary CDH board + independent COTS backup</strong></td>
-                <td>Balances growth, mission-specific data handling, and independent backup reliability.</td>
+                <td><strong style="color: var(--accent);">Custom primary avionics/CDH board + independent COTS backup</strong></td>
+                <td>Balances mission-specific avionics growth, custom data handling, interface flexibility, and independent backup reliability.</td>
                 <td>Component selection, schematic architecture, and interface budget closure.</td>
               </tr>
               <tr class="selected">
@@ -425,7 +429,7 @@
               <tr>
                 <td class="candidate">Safety Controls</td>
                 <td>Default-safe outputs, inhibits, watchdog/brownout logic, ESD and harness controls</td>
-                <td>Turns hazard analysis into testable hardware, software, and procedure requirements.</td>
+                <td>Turns hazard analysis into testable hardware, software, harnessing, and procedure requirements.</td>
                 <td>Verification matrix and bench-test procedures.</td>
               </tr>
             </tbody>
@@ -454,10 +458,11 @@
         <div class="timeline reveal">
           <div class="tl-item done">
             <div class="tl-date">FEB 2026</div>
-            <h3 class="tl-title">CDH lead role established</h3>
+            <h3 class="tl-title">Avionics/CDH leadership role established</h3>
             <p class="tl-body">
-              Took ownership of the Command and Data Handling subsystem and began organizing
-              a five-member team around requirements, interfaces, architecture, and reviewable outputs.
+              Took ownership of the Command and Data Handling subsystem while also driving the broader
+              avionics architecture discussion: requirements, interfaces, data paths, power needs,
+              sensor coverage, and reviewable outputs for a five-member team.
             </p>
             <span class="tl-tag">CLOSED</span>
           </div>
@@ -487,7 +492,7 @@
             <h3 class="tl-title">Architecture decision matrices completed</h3>
             <p class="tl-body">
               Completed flight-computer and onboard data-logging architecture decisions. The
-              converged baseline is a custom primary CDH board with independent COTS backup,
+              converged baseline is a custom primary avionics/CDH board with independent COTS backup,
               plus custom full-data logging with independent COTS core-data logging.
             </p>
             <span class="tl-tag now">CURRENT</span>
@@ -512,7 +517,7 @@
         <header class="brief-section-head reveal">
           <div class="brief-section-num">§ 06 · My Role</div>
           <div>
-            <h2 class="brief-section-title">What <em>I own</em>.</h2>
+            <h2 class="brief-section-title">What <em>I actually do</em>.</h2>
             <p class="brief-section-kicker">Specific responsibilities and engineering impact.</p>
           </div>
         </header>
@@ -520,22 +525,25 @@
         <div class="brief-two reveal">
           <div class="brief-prose">
             <p>
-              As <strong>CDH Lead</strong>, I am responsible for keeping the flight-computer,
-              sensing, logging, timing, safety-state, and subsystem-interface work coherent
-              before the team commits to hardware. My contribution has been to slow the team
-              down in the right places: requirements first, architecture second, components third,
-              PCB layout only after interfaces and budgets are credible.
+              As <strong>Avionics &amp; CDH Lead</strong>, I am responsible for keeping the flight-computer,
+              sensing, logging, timing, safety-state, data-interface, and integration-planning work
+              coherent before the team commits to hardware. The title is broader than CDH because
+              the work crosses into early avionics architecture and systems engineering: requirements
+              first, architecture second, components third, PCB layout only after interfaces and budgets
+              are credible.
             </p>
             <ul>
-              <li><strong>Requirements discipline.</strong> Maintain CDH requirements as the basis for trade matrices instead of letting a preferred component define the mission.</li>
+              <li><strong>Requirements discipline.</strong> Maintain avionics/CDH requirements as the basis for trade matrices instead of letting a preferred component define the mission.</li>
               <li><strong>Architecture decisions.</strong> Lead flight-computer and data-logging trade studies with explicit assumptions, risks, and closure items.</li>
               <li><strong>Documentation system.</strong> Created the CDH document-control protocol to make requirements, analyses, interface documents, verification records, and change orders traceable.</li>
-              <li><strong>Hazard reduction.</strong> Built the initial CDH hazard assessment and tied major failure modes to practical controls and verification methods.</li>
-              <li><strong>Cross-team integration.</strong> Define what CDH needs from Power Production and Storage, Communications, Structures, Thermal Determination and Control, Propulsion, and recovery-related interfaces.</li>
+              <li><strong>Hazard reduction.</strong> Built the initial avionics/CDH hazard assessment and tied major failure modes to practical controls and verification methods.</li>
+              <li><strong>Cross-team integration.</strong> Define what avionics/CDH needs from Power Production and Storage, Communications, Structures, Thermal Determination and Control, Propulsion, and recovery-related interfaces.</li>
+              <li><strong>Lead-level communication.</strong> Present architecture decisions, open items, and rationale to other subsystem leads, the Chief Engineer, and the Project Manager so CDH decisions are not made in isolation.</li>
             </ul>
             <p>
               The page is intentionally honest: this is not presented as flown hardware yet.
-              The value is the systems-engineering work that prevents a premature, fragile avionics design.
+              The value is the systems-engineering and avionics architecture work that prevents a premature,
+              fragile design from reaching schematic capture before the interfaces, hazards, and budgets are understood.
             </p>
           </div>
 
