@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mission Brief · M-006 BlueSpear — Endurance Aero Labs</title>
+  <meta name="description" content="Mission brief for Project BlueSpear — student space launch vehicle, AIAA at UTA. Avionics lead role, subsystem architecture, trade studies, and integration plan." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="mission-brief.css">
+</head>
+<body>
+
+  <!-- ========================== NAV ========================== -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="brand" aria-label="Endurance Aero Labs">
+        <span class="brand-mark"><span></span></span>
+        Endurance&nbsp;Aero&nbsp;Labs
+      </a>
+      <div class="nav-links">
+        <a href="about.html">Operator</a>
+        <a href="index.html#capabilities">Capabilities</a>
+        <div class="nav-dropdown">
+          <a href="index.html#missions" class="nav-dropdown-trigger active">Missions <span class="caret">▾</span></a>
+          <div class="nav-dropdown-menu">
+            <a href="bluespear.html"><span class="dd-id">M-006</span><span class="dd-name">BlueSpear · Avionics</span></a>
+            <a href="mission-template.html"><span class="dd-id">M-005</span><span class="dd-name">CubeSat Feasibility</span></a>
+            <a href="mission-template.html"><span class="dd-id">M-004</span><span class="dd-name">L1 High-Power Rocket</span></a>
+            <a href="mission-template.html"><span class="dd-id">M-003</span><span class="dd-name">Composites &amp; RF</span></a>
+            <a href="mission-template.html"><span class="dd-id">M-002</span><span class="dd-name">6-DOF Sim</span></a>
+            <div class="nav-dropdown-sep"></div>
+            <a href="index.html#missions" class="dd-all">All missions →</a>
+          </div>
+        </div>
+        <a href="index.html#education">Training</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+      <div class="nav-status">
+        <span class="status-dot"></span>
+        Available · Summer&nbsp;2026
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+
+    <!-- ========================== BRIEF HERO ========================== -->
+    <section class="brief-hero">
+      <div class="container">
+        <div class="brief-crumbs reveal">
+          <a href="index.html">Mission Log</a>
+          <span class="sep">/</span>
+          <a href="index.html#missions">Active</a>
+          <span class="sep">/</span>
+          <span>M-006 · BlueSpear</span>
+        </div>
+
+        <div class="brief-banner reveal">
+          <div>
+            <div class="brief-id-row">
+              <span>M-006</span><span class="pipe">·</span>
+              <span>BlueSpear</span><span class="pipe">·</span>
+              <span class="status"><span class="dot"></span>Active</span>
+            </div>
+            <h1 class="brief-title">Project <em>BlueSpear</em></h1>
+            <p class="brief-sub">Student Space Launch Vehicle · Avionics &amp; CDH Subsystem</p>
+          </div>
+
+          <div class="brief-mark" aria-hidden="true">
+            <svg viewBox="0 0 140 140">
+              <!-- outer rotating ring -->
+              <g class="rot">
+                <circle cx="70" cy="70" r="64" stroke-dasharray="2 5" />
+                <text x="70" y="14" font-family="JetBrains Mono" font-size="6" fill="var(--accent)" text-anchor="middle" stroke="none">M-006</text>
+              </g>
+              <!-- inner static elements -->
+              <circle cx="70" cy="70" r="42" class="mute" />
+              <!-- vehicle silhouette -->
+              <g transform="translate(70 70)">
+                <polygon points="0,-32 6,-20 6,28 -6,28 -6,-20" class="fill" />
+                <polygon points="-6,28 -14,42 -6,38" class="fill" />
+                <polygon points="6,28 14,42 6,38" class="fill" />
+                <line x1="0" y1="-32" x2="0" y2="32" stroke="var(--bg)" stroke-width="0.6" />
+              </g>
+              <!-- crosshair -->
+              <line x1="70" y1="0" x2="70" y2="20" />
+              <line x1="70" y1="120" x2="70" y2="140" />
+              <line x1="0" y1="70" x2="20" y2="70" />
+              <line x1="120" y1="70" x2="140" y2="70" />
+            </svg>
+          </div>
+        </div>
+
+        <div class="brief-facts reveal">
+          <div class="brief-fact">
+            <span class="brief-fact-label">Role</span>
+            <span class="brief-fact-value acc">Avionics Lead</span>
+          </div>
+          <div class="brief-fact">
+            <span class="brief-fact-label">Org</span>
+            <span class="brief-fact-value">AIAA at UTA</span>
+          </div>
+          <div class="brief-fact">
+            <span class="brief-fact-label">Team</span>
+            <span class="brief-fact-value">5 Engineers</span>
+          </div>
+          <div class="brief-fact">
+            <span class="brief-fact-label">Window</span>
+            <span class="brief-fact-value">FEB 2026 — PRESENT</span>
+          </div>
+          <div class="brief-fact">
+            <span class="brief-fact-label">Phase</span>
+            <span class="brief-fact-value acc">Preliminary Design</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 01 · OVERVIEW ========================== -->
+    <section class="brief">
+      <div class="container">
+        <header class="brief-section-head reveal">
+          <div class="brief-section-num">§ 01 · Overview</div>
+          <div>
+            <h2 class="brief-section-title">Mission <em>summary</em>.</h2>
+            <p class="brief-section-kicker">What we're building and why it matters.</p>
+          </div>
+        </header>
+
+        <div class="brief-two reveal">
+          <div class="brief-prose">
+            <p>
+              <strong>BlueSpear</strong> is AIAA at UTA's student-led space launch vehicle
+              program. The objective is to design, build, and fly a launch vehicle as a
+              student-driven engineering exercise — with the kind of subsystem rigor and
+              documentation discipline that production aerospace programs run on.
+            </p>
+            <p>
+              I came onto the program as <strong>Avionics Lead</strong> in February 2026,
+              where I run a five-person avionics and command-and-data-handling team. The
+              avionics subsystem owns the flight computer, sensor stack, power-rail
+              definitions to the comms and recovery subsystems, and the interface to ground.
+            </p>
+            <p>
+              <em>// EDIT ME:</em> If your program has a more specific mission objective —
+              target altitude, payload, competition (Spaceport America Cup, IREC, etc.) —
+              add it here in 1–2 sentences. Hiring managers love a one-line mission
+              statement.
+            </p>
+          </div>
+
+          <aside class="brief-aside">
+            <div class="brief-aside-block">
+              <div class="brief-aside-label">At a Glance</div>
+              <ul class="brief-aside-list">
+                <li>Mission ID <span class="acc">·</span> M-006</li>
+                <li>Subsystem <span class="acc">·</span> Avionics &amp; CDH</li>
+                <li>Phase <span class="acc">·</span> Preliminary Design</li>
+                <li>Team Size <span class="acc">·</span> 5</li>
+                <li>Cadence <span class="acc">·</span> Weekly</li>
+              </ul>
+            </div>
+            <div class="brief-aside-block">
+              <div class="brief-aside-label">Scope Tags</div>
+              <ul class="brief-aside-list">
+                <li>Flight Computer Selection</li>
+                <li>Sensor Architecture</li>
+                <li>ICD Authorship</li>
+                <li>Risk &amp; Hazard Analysis</li>
+                <li>Integration Planning</li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 02 · OBJECTIVES ========================== -->
+    <section class="brief">
+      <div class="container">
+        <header class="brief-section-head reveal">
+          <div class="brief-section-num">§ 02 · Objectives</div>
+          <div>
+            <h2 class="brief-section-title">Subsystem <em>objectives</em>.</h2>
+            <p class="brief-section-kicker">Top-level avionics goals derived from mission intent.</p>
+          </div>
+        </header>
+
+        <div class="brief-two reveal">
+          <div class="brief-prose">
+            <ul>
+              <li><strong>OBJ-01 ·</strong> Deliver a flight-computer architecture capable of running data acquisition, recovery logic, and telemetry within the vehicle's mass, power, and form-factor budgets.</li>
+              <li><strong>OBJ-02 ·</strong> Define sensor coverage — IMU, barometric altitude, GPS — sufficient to characterize trajectory, detect apogee, and validate recovery deployment.</li>
+              <li><strong>OBJ-03 ·</strong> Author interface control documents (ICDs) for every power and signal interface between avionics, comms, recovery, and propulsion.</li>
+              <li><strong>OBJ-04 ·</strong> Build a hazard / risk register tied to specific failure modes (e.g., premature deployment, brown-out, telemetry loss) with mitigations traceable to design choices.</li>
+              <li><strong>OBJ-05 ·</strong> Plan integration &amp; test campaign — bench checkouts, end-to-end simulated flights, and pre-flight functional tests — so launch day is a verification step, not a debug session.</li>
+            </ul>
+            <p>
+              <em>// EDIT ME:</em> Adjust objectives to match what your team has actually
+              committed to. Number them, and try to tie each to a measurable outcome.
+            </p>
+          </div>
+
+          <aside class="brief-aside">
+            <div class="brief-aside-block">
+              <div class="brief-aside-label">Success Criteria</div>
+              <ul class="brief-aside-list">
+                <li><span class="acc">✓</span> PDR-ready architecture</li>
+                <li><span class="acc">✓</span> Selected COTS flight computer</li>
+                <li><span class="acc">✓</span> Sensor stack approved</li>
+                <li><span class="acc">✓</span> ICDs signed off</li>
+                <li><span class="acc">✓</span> Risk register baselined</li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 03 · ARCHITECTURE ========================== -->
+    <section class="brief">
+      <div class="container">
+        <header class="brief-section-head reveal">
+          <div class="brief-section-num">§ 03 · Architecture</div>
+          <div>
+            <h2 class="brief-section-title">Avionics <em>block diagram</em>.</h2>
+            <p class="brief-section-kicker">Preliminary subsystem layout. Subject to PDR revision.</p>
+          </div>
+        </header>
+
+        <div class="arch-block reveal">
+          <div class="arch-block-head">
+            <span class="arch-block-title">FIG · 01 — Avionics &amp; CDH Block Diagram</span>
+            <span class="arch-block-meta">REV A · PRELIMINARY</span>
+          </div>
+
+          <div class="arch-svg-wrap">
+            <svg class="arch-svg" viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent)" />
+                </marker>
+              </defs>
+              <style>
+                .box { fill: #11151E; stroke: var(--fg-soft); stroke-width: 0.8; }
+                .box-acc { fill: #11151E; stroke: var(--accent); stroke-width: 1.2; }
+                .box-label { font-family: 'JetBrains Mono', monospace; font-size: 12px; fill: var(--fg); font-weight: 500; }
+                .box-sub   { font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: var(--fg-mute); letter-spacing: 0.1em; }
+                .box-id    { font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: var(--accent); letter-spacing: 0.14em; font-weight: 600; }
+                .line { stroke: var(--fg-soft); stroke-width: 0.8; fill: none; }
+                .line-acc { stroke: var(--accent); stroke-width: 1.2; fill: none; }
+                .line-pwr { stroke: var(--accent); stroke-width: 1.2; stroke-dasharray: 4 3; fill: none; }
+                .line-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: var(--fg-mute); letter-spacing: 0.08em; }
+              </style>
+
+              <!-- Title strip -->
+              <text x="20" y="22" class="box-id">FIG · 01 / BLUESPEAR AVIONICS · REV A</text>
+              <line x1="20" y1="30" x2="880" y2="30" stroke="var(--rule)" stroke-width="1" />
+
+              <!-- POWER (left) -->
+              <rect class="box" x="40" y="220" width="140" height="60" />
+              <text x="50" y="240" class="box-id">PWR · 01</text>
+              <text x="50" y="258" class="box-label">Battery / Reg.</text>
+              <text x="50" y="272" class="box-sub">3.3V / 5V RAILS</text>
+
+              <!-- FLIGHT COMPUTER (center, accent) -->
+              <rect class="box-acc" x="370" y="180" width="180" height="120" />
+              <text x="380" y="200" class="box-id">CDH · 01</text>
+              <text x="380" y="222" class="box-label">Flight Computer</text>
+              <text x="380" y="240" class="box-sub">COTS · TBD</text>
+              <text x="380" y="258" class="box-sub">— Telemetry</text>
+              <text x="380" y="272" class="box-sub">— Recovery Logic</text>
+              <text x="380" y="286" class="box-sub">— DAQ</text>
+
+              <!-- SENSORS (top) -->
+              <rect class="box" x="170" y="60" width="120" height="55" />
+              <text x="180" y="78" class="box-id">SNS · 01</text>
+              <text x="180" y="96" class="box-label">IMU</text>
+              <text x="180" y="108" class="box-sub">9-DOF · I²C</text>
+
+              <rect class="box" x="320" y="60" width="120" height="55" />
+              <text x="330" y="78" class="box-id">SNS · 02</text>
+              <text x="330" y="96" class="box-label">Baro / Alt.</text>
+              <text x="330" y="108" class="box-sub">SPI</text>
+
+              <rect class="box" x="470" y="60" width="120" height="55" />
+              <text x="480" y="78" class="box-id">SNS · 03</text>
+              <text x="480" y="96" class="box-label">GPS</text>
+              <text x="480" y="108" class="box-sub">UART · NMEA</text>
+
+              <!-- COMMS (right) -->
+              <rect class="box" x="720" y="180" width="140" height="60" />
+              <text x="730" y="200" class="box-id">COM · 01</text>
+              <text x="730" y="218" class="box-label">Telemetry Radio</text>
+              <text x="730" y="232" class="box-sub">UHF · DOWNLINK</text>
+
+              <!-- RECOVERY (bottom right) -->
+              <rect class="box" x="720" y="280" width="140" height="60" />
+              <text x="730" y="300" class="box-id">REC · 01</text>
+              <text x="730" y="318" class="box-label">Recovery</text>
+              <text x="730" y="332" class="box-sub">E-MATCH / CHARGES</text>
+
+              <!-- GROUND (bottom) -->
+              <rect class="box" x="370" y="370" width="180" height="60" />
+              <text x="380" y="390" class="box-id">GND · 01</text>
+              <text x="380" y="408" class="box-label">Ground Station</text>
+              <text x="380" y="422" class="box-sub">RX · LOGGING · CMDS</text>
+
+              <!-- Power lines -->
+              <path class="line-pwr" d="M 180 230 L 370 230" />
+              <text class="line-label" x="240" y="222">PWR</text>
+
+              <!-- Sensor → FC lines -->
+              <path class="line" d="M 230 115 L 230 160 L 410 160 L 410 180" marker-end="url(#arrow)" />
+              <path class="line" d="M 380 115 L 380 160 L 440 160 L 440 180" marker-end="url(#arrow)" />
+              <path class="line" d="M 530 115 L 530 160 L 480 160 L 480 180" marker-end="url(#arrow)" />
+              <text class="line-label" x="240" y="155">I²C · SPI · UART</text>
+
+              <!-- FC → Comms -->
+              <path class="line-acc" d="M 550 220 L 720 210" marker-end="url(#arrow)" />
+              <text class="line-label" x="600" y="208">TLM</text>
+
+              <!-- FC → Recovery -->
+              <path class="line-acc" d="M 550 260 L 720 305" marker-end="url(#arrow)" />
+              <text class="line-label" x="600" y="290">DEPLOY</text>
+
+              <!-- Comms ↓ Ground -->
+              <path class="line" stroke-dasharray="3 3" d="M 790 240 L 790 340 L 550 400" marker-end="url(#arrow)" />
+              <text class="line-label" x="680" y="370">RF DOWNLINK</text>
+
+              <!-- Legend -->
+              <line x1="40" y1="430" x2="60" y2="430" class="line-acc" />
+              <text x="66" y="434" class="box-sub">DATA / CMD</text>
+              <line x1="170" y1="430" x2="190" y2="430" class="line-pwr" />
+              <text x="196" y="434" class="box-sub">POWER</text>
+              <line x1="280" y1="430" x2="300" y2="430" class="line" stroke-dasharray="3 3" />
+              <text x="306" y="434" class="box-sub">RF</text>
+            </svg>
+          </div>
+
+          <div class="arch-caption">
+            <span class="acc">FIG · 01</span> · Preliminary avionics block diagram. Subject to revision at PDR.
+            All interface specs documented in companion <span class="acc">ICD-AV-001</span> (in progress).
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 04 · TRADE STUDY ========================== -->
+    <section class="brief">
+      <div class="container">
+        <header class="brief-section-head reveal">
+          <div class="brief-section-num">§ 04 · Trade Study</div>
+          <div>
+            <h2 class="brief-section-title">Flight computer <em>down-select</em>.</h2>
+            <p class="brief-section-kicker">COTS candidates evaluated against weighted criteria.</p>
+          </div>
+        </header>
+
+        <div class="reveal">
+          <p class="brief-prose" style="max-width: 70ch; font-size: 16px; line-height: 1.65; color: var(--fg-soft); margin: 0 0 24px;">
+            <em>// EDIT ME — Below is a sample trade matrix. Replace candidate names,
+            criteria, and scores with what your team actually ran. Highlight the selected
+            row with class="selected".</em>
+          </p>
+
+          <div class="table-scroll">
+          <table class="trade-table">
+            <thead>
+              <tr>
+                <th>Candidate</th>
+                <th>Mass</th>
+                <th>Power</th>
+                <th>Telemetry</th>
+                <th>Heritage</th>
+                <th>Cost</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="selected">
+                <td class="candidate">Candidate A — // FILL IN</td>
+                <td><span class="score s5">5</span></td>
+                <td><span class="score s4">4</span></td>
+                <td><span class="score s5">5</span></td>
+                <td><span class="score s4">4</span></td>
+                <td><span class="score s3">3</span></td>
+                <td><strong style="color: var(--accent);">21</strong></td>
+              </tr>
+              <tr>
+                <td class="candidate">Candidate B — // FILL IN</td>
+                <td><span class="score s3">3</span></td>
+                <td><span class="score s5">5</span></td>
+                <td><span class="score s4">4</span></td>
+                <td><span class="score s3">3</span></td>
+                <td><span class="score s4">4</span></td>
+                <td>19</td>
+              </tr>
+              <tr>
+                <td class="candidate">Candidate C — // FILL IN</td>
+                <td><span class="score s4">4</span></td>
+                <td><span class="score s3">3</span></td>
+                <td><span class="score s3">3</span></td>
+                <td><span class="score s5">5</span></td>
+                <td><span class="score s2">2</span></td>
+                <td>17</td>
+              </tr>
+              <tr>
+                <td class="candidate">Custom Build — // FILL IN</td>
+                <td><span class="score s5">5</span></td>
+                <td><span class="score s4">4</span></td>
+                <td><span class="score s5">5</span></td>
+                <td><span class="score s2">2</span></td>
+                <td><span class="score s2">2</span></td>
+                <td>18</td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+          <span class="table-scroll-hint">Swipe to view full matrix</span>
+
+          <p style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-mute); margin-top: 20px; font-weight: 500;">
+            Scoring: 1 (poor) — 5 (excellent). Selected candidate marked with <span style="color: var(--accent);">▸</span>.
+            Full rationale and datasheets archived in <span style="color: var(--accent);">/docs/TS-AV-001</span>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 05 · TIMELINE ========================== -->
+    <section class="brief">
+      <div class="container">
+        <header class="brief-section-head reveal">
+          <div class="brief-section-num">§ 05 · Timeline</div>
+          <div>
+            <h2 class="brief-section-title">Phases &amp; <em>milestones</em>.</h2>
+            <p class="brief-section-kicker">Where we've been, where we are, what's next.</p>
+          </div>
+        </header>
+
+        <div class="timeline reveal">
+          <div class="tl-item done">
+            <div class="tl-date">FEB 2026</div>
+            <h3 class="tl-title">Team formed · Avionics lead assigned</h3>
+            <p class="tl-body">
+              Recruited the five-person avionics team, scoped subsystem ownership, set
+              weekly cadence and tooling (issue tracking, shared docs, repo structure).
+            </p>
+            <span class="tl-tag">CLOSED</span>
+          </div>
+
+          <div class="tl-item now">
+            <div class="tl-date">MAR — APR 2026</div>
+            <h3 class="tl-title">Preliminary design &amp; trade studies</h3>
+            <p class="tl-body">
+              Building out the avionics architecture, running flight-computer and sensor
+              trade studies against mass, power, telemetry, and reliability budgets. ICD
+              and risk-register drafts in flight.
+            </p>
+            <span class="tl-tag now">IN PROGRESS</span>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-date">MAY 2026 — TARGET</div>
+            <h3 class="tl-title">Preliminary Design Review (PDR)</h3>
+            <p class="tl-body">
+              Subsystem-level PDR. Goal: architecture baselined, COTS candidates
+              down-selected, ICDs at REV A, risk register live.
+            </p>
+            <span class="tl-tag">UPCOMING</span>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-date">SUMMER 2026</div>
+            <h3 class="tl-title">Build · bench checkout · CDR</h3>
+            <p class="tl-body">
+              Procure long-lead items, bring up the avionics on the bench, integrate with
+              power and recovery in a hardware-in-the-loop setup, and go through Critical
+              Design Review.
+            </p>
+            <span class="tl-tag">PLANNED</span>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-date">FALL 2026 / SPRING 2027</div>
+            <h3 class="tl-title">Integration · test · flight</h3>
+            <p class="tl-body">
+              Full-vehicle integration, end-to-end functional test, pre-flight checkouts,
+              and launch campaign.
+            </p>
+            <span class="tl-tag">PLANNED</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== 06 · MY ROLE ========================== -->
+    <section class="brief">
+      <div class="container">
+        <header class="brief-section-head reveal">
+          <div class="brief-section-num">§ 06 · My Role</div>
+          <div>
+            <h2 class="brief-section-title">What <em>I own</em>.</h2>
+            <p class="brief-section-kicker">Specific responsibilities and contributions.</p>
+          </div>
+        </header>
+
+        <div class="brief-two reveal">
+          <div class="brief-prose">
+            <p>
+              As <strong>Avionics Lead</strong>, I own the subsystem end-to-end — from
+              architecture down to the integration plan that hands the box off to the launch
+              team. My day-to-day:
+            </p>
+            <ul>
+              <li><strong>Architecture &amp; design.</strong> Drive the avionics block diagram, sensor selection, and interface definitions. Make sure every signal and every rail has a documented owner and a budget.</li>
+              <li><strong>Trade studies.</strong> Lead the team through structured trade studies on flight computer, IMU, GPS, and barometric candidates. Decisions tie back to weighted criteria, not vibes.</li>
+              <li><strong>Documentation.</strong> Author the avionics ICDs, the risk register, and the integration-and-test plan. The documents are the deliverable — they're what the rest of the team builds against.</li>
+              <li><strong>Team coordination.</strong> Run the avionics standup, unblock the five engineers, and represent avionics at program-level reviews.</li>
+              <li><strong>Cross-subsystem interfaces.</strong> Sync with comms, recovery, propulsion, and structures leads on every interface that crosses subsystem boundaries.</li>
+            </ul>
+            <p>
+              <em>// EDIT ME:</em> Add 1–2 sentences on a specific contribution you're
+              proud of (e.g., "I led the IMU trade study and pushed back on the team's
+              initial favorite when its mag interference numbers didn't close the budget").
+              That's the kind of detail recruiters remember.
+            </p>
+          </div>
+
+          <aside class="brief-aside">
+            <div class="brief-aside-block">
+              <div class="brief-aside-label">Tools Used</div>
+              <ul class="brief-aside-list">
+                <li>Altium Designer</li>
+                <li>SolidWorks</li>
+                <li>Python · MATLAB</li>
+                <li>Git / GitHub</li>
+                <li>LaTeX</li>
+              </ul>
+            </div>
+            <div class="brief-aside-block">
+              <div class="brief-aside-label">Deliverables</div>
+              <ul class="brief-aside-list">
+                <li>ICD-AV-001 <span class="acc">·</span> Draft</li>
+                <li>TS-AV-001 <span class="acc">·</span> Draft</li>
+                <li>Risk Register <span class="acc">·</span> Draft</li>
+                <li>I&amp;T Plan <span class="acc">·</span> Outline</li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================== BRIEF FOOT ========================== -->
+    <section class="brief-foot">
+      <div class="container">
+        <div class="brief-foot-grid">
+          <p class="brief-foot-left">
+            End of brief. Questions, corrections, or interview requests — <em>open a channel</em>.
+          </p>
+          <div class="brief-foot-actions">
+            <a href="index.html#missions" class="brief-action">← Back to Mission Log</a>
+            <a href="index.html#contact" class="brief-action primary">Open a Channel →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div>© 2026 · Christian Ibarra</div>
+        <div>M-006 · BlueSpear · Mission Brief</div>
+        <div>Last Update · <span id="ts">—</span></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="shared.js"></script>
+</body>
+</html>

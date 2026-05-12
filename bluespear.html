@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mission Brief · M-006 BlueSpear — Endurance Aero Labs</title>
-  <meta name="description" content="Mission brief for Project BlueSpear — student space launch vehicle, AIAA at UTA. Avionics lead role, subsystem architecture, trade studies, and integration plan." />
+  <meta name="description" content="Mission brief for Project BlueSpear — AIAA at UTA student space launch vehicle targeting the Kármán line. CDH lead role, subsystem architecture decisions, hazard assessment, and integration planning." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,7 +28,7 @@
         <div class="nav-dropdown">
           <a href="index.html#missions" class="nav-dropdown-trigger active">Missions <span class="caret">▾</span></a>
           <div class="nav-dropdown-menu">
-            <a href="bluespear.html"><span class="dd-id">M-006</span><span class="dd-name">BlueSpear · Avionics</span></a>
+            <a href="bluespear.html"><span class="dd-id">M-006</span><span class="dd-name">BlueSpear · CDH</span></a>
             <a href="mission-template.html"><span class="dd-id">M-005</span><span class="dd-name">CubeSat Feasibility</span></a>
             <a href="mission-template.html"><span class="dd-id">M-004</span><span class="dd-name">L1 High-Power Rocket</span></a>
             <a href="mission-template.html"><span class="dd-id">M-003</span><span class="dd-name">Composites &amp; RF</span></a>
@@ -68,7 +68,7 @@
               <span class="status"><span class="dot"></span>Active</span>
             </div>
             <h1 class="brief-title">Project <em>BlueSpear</em></h1>
-            <p class="brief-sub">Student Space Launch Vehicle · Avionics &amp; CDH Subsystem</p>
+            <p class="brief-sub">Student Space Launch Vehicle · Command &amp; Data Handling Subsystem</p>
           </div>
 
           <div class="brief-mark" aria-hidden="true">
@@ -99,7 +99,7 @@
         <div class="brief-facts reveal">
           <div class="brief-fact">
             <span class="brief-fact-label">Role</span>
-            <span class="brief-fact-value acc">Avionics Lead</span>
+            <span class="brief-fact-value acc">CDH Lead</span>
           </div>
           <div class="brief-fact">
             <span class="brief-fact-label">Org</span>
@@ -115,7 +115,7 @@
           </div>
           <div class="brief-fact">
             <span class="brief-fact-label">Phase</span>
-            <span class="brief-fact-value acc">Preliminary Design</span>
+            <span class="brief-fact-value acc">Architecture Trades</span>
           </div>
         </div>
       </div>
@@ -128,29 +128,31 @@
           <div class="brief-section-num">§ 01 · Overview</div>
           <div>
             <h2 class="brief-section-title">Mission <em>summary</em>.</h2>
-            <p class="brief-section-kicker">What we're building and why it matters.</p>
+            <p class="brief-section-kicker">What we're building, what CDH owns, and what has actually been completed.</p>
           </div>
         </header>
 
         <div class="brief-two reveal">
           <div class="brief-prose">
             <p>
-              <strong>BlueSpear</strong> is AIAA at UTA's student-led space launch vehicle
-              program. The objective is to design, build, and fly a launch vehicle as a
-              student-driven engineering exercise — with the kind of subsystem rigor and
-              documentation discipline that production aerospace programs run on.
+              <strong>Project BlueSpear</strong> is AIAA at UTA's student space launch
+              vehicle program. The program objective is to safely design, build, test,
+              and operate a rocket that exceeds the <strong>Kármán line</strong> —
+              100 km above mean sea level — with engineering margins.
             </p>
             <p>
-              I came onto the program as <strong>Avionics Lead</strong> in February 2026,
-              where I run a five-person avionics and command-and-data-handling team. The
-              avionics subsystem owns the flight computer, sensor stack, power-rail
-              definitions to the comms and recovery subsystems, and the interface to ground.
+              I serve as the <strong>Command and Data Handling (CDH) Lead</strong>,
+              leading a five-member subsystem team through early architecture definition,
+              requirements cleanup, decision matrices, and cross-subsystem interface planning.
+              The current work is intentionally before PCB layout: requirements, interfaces,
+              hazards, data paths, power needs, and architecture decisions have to close
+              before a board is worth designing.
             </p>
             <p>
-              <em>// EDIT ME:</em> If your program has a more specific mission objective —
-              target altitude, payload, competition (Spaceport America Cup, IREC, etc.) —
-              add it here in 1–2 sentences. Hiring managers love a one-line mission
-              statement.
+              The main impact so far is that CDH has moved from a vague “pick a flight
+              computer” problem into a traceable engineering package: a working requirements
+              baseline, a document-control protocol, an initial hazard assessment, and
+              architecture decision matrices for the flight computer and onboard data logging.
             </p>
           </div>
 
@@ -158,21 +160,21 @@
             <div class="brief-aside-block">
               <div class="brief-aside-label">At a Glance</div>
               <ul class="brief-aside-list">
-                <li>Mission ID <span class="acc">·</span> M-006</li>
-                <li>Subsystem <span class="acc">·</span> Avionics &amp; CDH</li>
-                <li>Phase <span class="acc">·</span> Preliminary Design</li>
+                <li>Mission Target <span class="acc">·</span> &gt;100 km MSL</li>
+                <li>Subsystem <span class="acc">·</span> CDH</li>
+                <li>Role <span class="acc">·</span> CDH Lead</li>
                 <li>Team Size <span class="acc">·</span> 5</li>
-                <li>Cadence <span class="acc">·</span> Weekly</li>
+                <li>Window <span class="acc">·</span> Feb 2026 — Present</li>
               </ul>
             </div>
             <div class="brief-aside-block">
-              <div class="brief-aside-label">Scope Tags</div>
+              <div class="brief-aside-label">Current Baseline</div>
               <ul class="brief-aside-list">
-                <li>Flight Computer Selection</li>
-                <li>Sensor Architecture</li>
-                <li>ICD Authorship</li>
-                <li>Risk &amp; Hazard Analysis</li>
-                <li>Integration Planning</li>
+                <li>Custom primary CDH board</li>
+                <li>Independent COTS backup</li>
+                <li>Full-data + core-data logging</li>
+                <li>Storage technology TBR</li>
+                <li>Interfaces under definition</li>
               </ul>
             </div>
           </aside>
@@ -186,35 +188,41 @@
         <header class="brief-section-head reveal">
           <div class="brief-section-num">§ 02 · Objectives</div>
           <div>
-            <h2 class="brief-section-title">Subsystem <em>objectives</em>.</h2>
-            <p class="brief-section-kicker">Top-level avionics goals derived from mission intent.</p>
+            <h2 class="brief-section-title">CDH <em>objectives</em>.</h2>
+            <p class="brief-section-kicker">Near-term subsystem goals tied to reviewable outputs.</p>
           </div>
         </header>
 
         <div class="brief-two reveal">
           <div class="brief-prose">
             <ul>
-              <li><strong>OBJ-01 ·</strong> Deliver a flight-computer architecture capable of running data acquisition, recovery logic, and telemetry within the vehicle's mass, power, and form-factor budgets.</li>
-              <li><strong>OBJ-02 ·</strong> Define sensor coverage — IMU, barometric altitude, GPS — sufficient to characterize trajectory, detect apogee, and validate recovery deployment.</li>
-              <li><strong>OBJ-03 ·</strong> Author interface control documents (ICDs) for every power and signal interface between avionics, comms, recovery, and propulsion.</li>
-              <li><strong>OBJ-04 ·</strong> Build a hazard / risk register tied to specific failure modes (e.g., premature deployment, brown-out, telemetry loss) with mitigations traceable to design choices.</li>
-              <li><strong>OBJ-05 ·</strong> Plan integration &amp; test campaign — bench checkouts, end-to-end simulated flights, and pre-flight functional tests — so launch day is a verification step, not a debug session.</li>
+              <li><strong>OBJ-01 · Requirements baseline.</strong> Maintain a CDH requirements baseline that is specific enough to drive trade studies, but not overfit to components that have not been selected yet.</li>
+              <li><strong>OBJ-02 · Flight-computer architecture.</strong> Use a decision matrix to select a preliminary architecture rather than jumping directly to a single board or vendor.</li>
+              <li><strong>OBJ-03 · Data logging architecture.</strong> Separate full-resolution engineering data from minimum mission-critical data so that post-flight reconstruction does not depend on one device.</li>
+              <li><strong>OBJ-04 · Cross-subsystem interfaces.</strong> Define what CDH needs from Power Production and Storage, Communications, Structures, Thermal Determination and Control, Propulsion, and Recovery-related functions before hardware layout.</li>
+              <li><strong>OBJ-05 · Safety and verification.</strong> Convert CDH hazards into controls that can be inspected, tested, demonstrated, or verified before flight.</li>
             </ul>
-            <p>
-              <em>// EDIT ME:</em> Adjust objectives to match what your team has actually
-              committed to. Number them, and try to tie each to a measurable outcome.
-            </p>
           </div>
 
           <aside class="brief-aside">
             <div class="brief-aside-block">
-              <div class="brief-aside-label">Success Criteria</div>
+              <div class="brief-aside-label">Completed / Closed Enough</div>
               <ul class="brief-aside-list">
-                <li><span class="acc">✓</span> PDR-ready architecture</li>
-                <li><span class="acc">✓</span> Selected COTS flight computer</li>
-                <li><span class="acc">✓</span> Sensor stack approved</li>
-                <li><span class="acc">✓</span> ICDs signed off</li>
-                <li><span class="acc">✓</span> Risk register baselined</li>
+                <li><span class="acc">✓</span> CDH document-control protocol</li>
+                <li><span class="acc">✓</span> Initial CDH hazard assessment</li>
+                <li><span class="acc">✓</span> Requirements baseline for trades</li>
+                <li><span class="acc">✓</span> Flight-computer architecture matrix</li>
+                <li><span class="acc">✓</span> Data-logging architecture matrix</li>
+              </ul>
+            </div>
+            <div class="brief-aside-block">
+              <div class="brief-aside-label">Open Items</div>
+              <ul class="brief-aside-list">
+                <li>Storage technology matrix</li>
+                <li>Power/data budget closure</li>
+                <li>Sensor component down-select</li>
+                <li>Interface control release</li>
+                <li>Bench test plan</li>
               </ul>
             </div>
           </aside>
@@ -228,19 +236,19 @@
         <header class="brief-section-head reveal">
           <div class="brief-section-num">§ 03 · Architecture</div>
           <div>
-            <h2 class="brief-section-title">Avionics <em>block diagram</em>.</h2>
-            <p class="brief-section-kicker">Preliminary subsystem layout. Subject to PDR revision.</p>
+            <h2 class="brief-section-title">CDH <em>architecture</em>.</h2>
+            <p class="brief-section-kicker">Preliminary architecture baseline from the current decision matrices.</p>
           </div>
         </header>
 
         <div class="arch-block reveal">
           <div class="arch-block-head">
-            <span class="arch-block-title">FIG · 01 — Avionics &amp; CDH Block Diagram</span>
-            <span class="arch-block-meta">REV A · PRELIMINARY</span>
+            <span class="arch-block-title">FIG · 01 — BlueSpear CDH Architecture Baseline</span>
+            <span class="arch-block-meta">REV B · PRE-PDR</span>
           </div>
 
           <div class="arch-svg-wrap">
-            <svg class="arch-svg" viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg">
+            <svg class="arch-svg" viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                   <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent)" />
@@ -255,97 +263,114 @@
                 .line { stroke: var(--fg-soft); stroke-width: 0.8; fill: none; }
                 .line-acc { stroke: var(--accent); stroke-width: 1.2; fill: none; }
                 .line-pwr { stroke: var(--accent); stroke-width: 1.2; stroke-dasharray: 4 3; fill: none; }
+                .line-safe { stroke: var(--fg-soft); stroke-width: 1.0; stroke-dasharray: 5 4; fill: none; }
                 .line-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: var(--fg-mute); letter-spacing: 0.08em; }
               </style>
 
-              <!-- Title strip -->
-              <text x="20" y="22" class="box-id">FIG · 01 / BLUESPEAR AVIONICS · REV A</text>
+              <text x="20" y="22" class="box-id">FIG · 01 / BLUESPEAR CDH · ARCHITECTURE BASELINE</text>
               <line x1="20" y1="30" x2="880" y2="30" stroke="var(--rule)" stroke-width="1" />
 
-              <!-- POWER (left) -->
-              <rect class="box" x="40" y="220" width="140" height="60" />
-              <text x="50" y="240" class="box-id">PWR · 01</text>
-              <text x="50" y="258" class="box-label">Battery / Reg.</text>
-              <text x="50" y="272" class="box-sub">3.3V / 5V RAILS</text>
+              <!-- POWER -->
+              <rect class="box" x="40" y="220" width="150" height="72" />
+              <text x="52" y="242" class="box-id">PPS · IF</text>
+              <text x="52" y="260" class="box-label">Power Inputs</text>
+              <text x="52" y="274" class="box-sub">RAILS / PROTECTION TBR</text>
+              <text x="52" y="286" class="box-sub">PPS OWNS BATTERIES</text>
 
-              <!-- FLIGHT COMPUTER (center, accent) -->
-              <rect class="box-acc" x="370" y="180" width="180" height="120" />
-              <text x="380" y="200" class="box-id">CDH · 01</text>
-              <text x="380" y="222" class="box-label">Flight Computer</text>
-              <text x="380" y="240" class="box-sub">COTS · TBD</text>
-              <text x="380" y="258" class="box-sub">— Telemetry</text>
-              <text x="380" y="272" class="box-sub">— Recovery Logic</text>
-              <text x="380" y="286" class="box-sub">— DAQ</text>
+              <!-- PRIMARY CDH -->
+              <rect class="box-acc" x="355" y="145" width="205" height="110" />
+              <text x="368" y="168" class="box-id">CDH · PRIMARY</text>
+              <text x="368" y="190" class="box-label">Custom CDH Board</text>
+              <text x="368" y="208" class="box-sub">FULL DATA LOGGER</text>
+              <text x="368" y="222" class="box-sub">STATE / TIMING LOGIC</text>
+              <text x="368" y="236" class="box-sub">SUBSYSTEM INTERFACES</text>
 
-              <!-- SENSORS (top) -->
-              <rect class="box" x="170" y="60" width="120" height="55" />
-              <text x="180" y="78" class="box-id">SNS · 01</text>
-              <text x="180" y="96" class="box-label">IMU</text>
-              <text x="180" y="108" class="box-sub">9-DOF · I²C</text>
+              <!-- BACKUP -->
+              <rect class="box" x="355" y="295" width="205" height="86" />
+              <text x="368" y="318" class="box-id">CDH · BACKUP</text>
+              <text x="368" y="340" class="box-label">Independent COTS Unit</text>
+              <text x="368" y="358" class="box-sub">CORE DATA LOGGER</text>
+              <text x="368" y="372" class="box-sub">INDEPENDENT FALLBACK</text>
 
-              <rect class="box" x="320" y="60" width="120" height="55" />
-              <text x="330" y="78" class="box-id">SNS · 02</text>
-              <text x="330" y="96" class="box-label">Baro / Alt.</text>
-              <text x="330" y="108" class="box-sub">SPI</text>
+              <!-- SENSORS -->
+              <rect class="box" x="155" y="60" width="138" height="58" />
+              <text x="168" y="80" class="box-id">SNS · 01</text>
+              <text x="168" y="98" class="box-label">IMU</text>
+              <text x="168" y="110" class="box-sub">RANGE / RATE TBR</text>
 
-              <rect class="box" x="470" y="60" width="120" height="55" />
-              <text x="480" y="78" class="box-id">SNS · 03</text>
-              <text x="480" y="96" class="box-label">GPS</text>
-              <text x="480" y="108" class="box-sub">UART · NMEA</text>
+              <rect class="box" x="315" y="60" width="138" height="58" />
+              <text x="328" y="80" class="box-id">SNS · 02</text>
+              <text x="328" y="98" class="box-label">Barometer</text>
+              <text x="328" y="110" class="box-sub">ALTITUDE EVENT CUE</text>
 
-              <!-- COMMS (right) -->
-              <rect class="box" x="720" y="180" width="140" height="60" />
-              <text x="730" y="200" class="box-id">COM · 01</text>
-              <text x="730" y="218" class="box-label">Telemetry Radio</text>
-              <text x="730" y="232" class="box-sub">UHF · DOWNLINK</text>
+              <rect class="box" x="475" y="60" width="138" height="58" />
+              <text x="488" y="80" class="box-id">SNS · 03</text>
+              <text x="488" y="98" class="box-label">GPS / GNSS</text>
+              <text x="488" y="110" class="box-sub">COMPLIANCE TBR</text>
 
-              <!-- RECOVERY (bottom right) -->
-              <rect class="box" x="720" y="280" width="140" height="60" />
-              <text x="730" y="300" class="box-id">REC · 01</text>
-              <text x="730" y="318" class="box-label">Recovery</text>
-              <text x="730" y="332" class="box-sub">E-MATCH / CHARGES</text>
+              <rect class="box" x="635" y="60" width="138" height="58" />
+              <text x="648" y="80" class="box-id">ENV · 01</text>
+              <text x="648" y="98" class="box-label">Thermal / Health</text>
+              <text x="648" y="110" class="box-sub">TEMP / VOLTAGE TBR</text>
 
-              <!-- GROUND (bottom) -->
-              <rect class="box" x="370" y="370" width="180" height="60" />
-              <text x="380" y="390" class="box-id">GND · 01</text>
-              <text x="380" y="408" class="box-label">Ground Station</text>
-              <text x="380" y="422" class="box-sub">RX · LOGGING · CMDS</text>
+              <!-- STORAGE -->
+              <rect class="box" x="650" y="185" width="168" height="72" />
+              <text x="662" y="207" class="box-id">LOG · 01</text>
+              <text x="662" y="225" class="box-label">Storage Technology</text>
+              <text x="662" y="239" class="box-sub">FLASH / SD / EMMC TBR</text>
+              <text x="662" y="251" class="box-sub">NEXT TRADE MATRIX</text>
 
-              <!-- Power lines -->
-              <path class="line-pwr" d="M 180 230 L 370 230" />
-              <text class="line-label" x="240" y="222">PWR</text>
+              <!-- COMMS -->
+              <rect class="box" x="650" y="300" width="168" height="72" />
+              <text x="662" y="322" class="box-id">COM · IF</text>
+              <text x="662" y="340" class="box-label">Communications</text>
+              <text x="662" y="354" class="box-sub">RF TELEMETRY INTERFACE</text>
+              <text x="662" y="366" class="box-sub">COMMS TEAM OWNED</text>
 
-              <!-- Sensor → FC lines -->
-              <path class="line" d="M 230 115 L 230 160 L 410 160 L 410 180" marker-end="url(#arrow)" />
-              <path class="line" d="M 380 115 L 380 160 L 440 160 L 440 180" marker-end="url(#arrow)" />
-              <path class="line" d="M 530 115 L 530 160 L 480 160 L 480 180" marker-end="url(#arrow)" />
-              <text class="line-label" x="240" y="155">I²C · SPI · UART</text>
+              <!-- RECOVERY -->
+              <rect class="box" x="650" y="405" width="168" height="58" />
+              <text x="662" y="425" class="box-id">REC · IF</text>
+              <text x="662" y="443" class="box-label">Recovery Interface</text>
+              <text x="662" y="455" class="box-sub">SAFE ARM / INHIBIT TBR</text>
 
-              <!-- FC → Comms -->
-              <path class="line-acc" d="M 550 220 L 720 210" marker-end="url(#arrow)" />
-              <text class="line-label" x="600" y="208">TLM</text>
+              <!-- Connections from sensors -->
+              <path d="M224 118 L405 145" class="line-acc" marker-end="url(#arrow)" />
+              <path d="M384 118 L430 145" class="line-acc" marker-end="url(#arrow)" />
+              <path d="M544 118 L485 145" class="line-acc" marker-end="url(#arrow)" />
+              <path d="M704 118 L535 145" class="line-acc" marker-end="url(#arrow)" />
+              <text class="line-label" x="350" y="132">SENSOR DATA</text>
 
-              <!-- FC → Recovery -->
-              <path class="line-acc" d="M 550 260 L 720 305" marker-end="url(#arrow)" />
-              <text class="line-label" x="600" y="290">DEPLOY</text>
+              <!-- Power -->
+              <path d="M190 250 L355 190" class="line-pwr" marker-end="url(#arrow)" />
+              <path d="M190 260 L355 335" class="line-pwr" marker-end="url(#arrow)" />
+              <text class="line-label" x="224" y="234">PROTECTED POWER</text>
 
-              <!-- Comms ↓ Ground -->
-              <path class="line" stroke-dasharray="3 3" d="M 790 240 L 790 340 L 550 400" marker-end="url(#arrow)" />
-              <text class="line-label" x="680" y="370">RF DOWNLINK</text>
+              <!-- Primary backup data -->
+              <path d="M458 255 L458 295" class="line-safe" marker-end="url(#arrow)" />
+              <text class="line-label" x="474" y="282">MINIMUM CORE DATA</text>
+
+              <!-- Outbound -->
+              <path d="M560 220 L650 220" class="line-acc" marker-end="url(#arrow)" />
+              <path d="M560 335 L650 335" class="line-acc" marker-end="url(#arrow)" />
+              <path d="M560 245 C610 255 615 425 650 435" class="line-safe" marker-end="url(#arrow)" />
+              <text class="line-label" x="582" y="210">LOGGING</text>
+              <text class="line-label" x="584" y="327">TELEMETRY PACKETS</text>
+              <text class="line-label" x="585" y="412">SAFETY-CRITICAL OUTPUTS</text>
 
               <!-- Legend -->
-              <line x1="40" y1="430" x2="60" y2="430" class="line-acc" />
-              <text x="66" y="434" class="box-sub">DATA / CMD</text>
-              <line x1="170" y1="430" x2="190" y2="430" class="line-pwr" />
-              <text x="196" y="434" class="box-sub">POWER</text>
-              <line x1="280" y1="430" x2="300" y2="430" class="line" stroke-dasharray="3 3" />
-              <text x="306" y="434" class="box-sub">RF</text>
+              <line x1="40" y1="480" x2="60" y2="480" class="line-acc" />
+              <text x="66" y="484" class="box-sub">DATA / CONTROL</text>
+              <line x1="190" y1="480" x2="210" y2="480" class="line-pwr" />
+              <text x="216" y="484" class="box-sub">POWER</text>
+              <line x1="310" y1="480" x2="330" y2="480" class="line-safe" />
+              <text x="336" y="484" class="box-sub">SAFE / TBR INTERFACE</text>
             </svg>
           </div>
 
           <div class="arch-caption">
-            <span class="acc">FIG · 01</span> · Preliminary avionics block diagram. Subject to revision at PDR.
-            All interface specs documented in companion <span class="acc">ICD-AV-001</span> (in progress).
+            <span class="acc">FIG · 01</span> · Preliminary CDH architecture. The selected baseline is a
+            custom primary CDH board with an independent COTS backup. Storage technology, exact sensor
+            part numbers, and released interface control documents remain open items before PCB layout.
           </div>
         </div>
       </div>
@@ -355,69 +380,53 @@
     <section class="brief">
       <div class="container">
         <header class="brief-section-head reveal">
-          <div class="brief-section-num">§ 04 · Trade Study</div>
+          <div class="brief-section-num">§ 04 · Trade Results</div>
           <div>
-            <h2 class="brief-section-title">Flight computer <em>down-select</em>.</h2>
-            <p class="brief-section-kicker">COTS candidates evaluated against weighted criteria.</p>
+            <h2 class="brief-section-title">Architecture <em>decision package</em>.</h2>
+            <p class="brief-section-kicker">Results shown without inventing unavailable component scores.</p>
           </div>
         </header>
 
         <div class="reveal">
-          <p class="brief-prose" style="max-width: 70ch; font-size: 16px; line-height: 1.65; color: var(--fg-soft); margin: 0 0 24px;">
-            <em>// EDIT ME — Below is a sample trade matrix. Replace candidate names,
-            criteria, and scores with what your team actually ran. Highlight the selected
-            row with class="selected".</em>
+          <p class="brief-prose" style="max-width: 76ch; font-size: 16px; line-height: 1.65; color: var(--fg-soft); margin: 0 0 24px;">
+            These are architecture-level decisions, not final component selections. The purpose was to
+            reduce design risk before committing to schematics, PCB layout, procurement, or flight software.
           </p>
 
           <div class="table-scroll">
           <table class="trade-table">
             <thead>
               <tr>
-                <th>Candidate</th>
-                <th>Mass</th>
-                <th>Power</th>
-                <th>Telemetry</th>
-                <th>Heritage</th>
-                <th>Cost</th>
-                <th>Total</th>
+                <th>Decision Area</th>
+                <th>Selected Baseline</th>
+                <th>Why It Won</th>
+                <th>Open Closure Item</th>
               </tr>
             </thead>
             <tbody>
               <tr class="selected">
-                <td class="candidate">Candidate A — // FILL IN</td>
-                <td><span class="score s5">5</span></td>
-                <td><span class="score s4">4</span></td>
-                <td><span class="score s5">5</span></td>
-                <td><span class="score s4">4</span></td>
-                <td><span class="score s3">3</span></td>
-                <td><strong style="color: var(--accent);">21</strong></td>
+                <td class="candidate">Flight Computer Architecture</td>
+                <td><strong style="color: var(--accent);">Custom primary CDH board + independent COTS backup</strong></td>
+                <td>Balances growth, mission-specific data handling, and independent backup reliability.</td>
+                <td>Component selection, schematic architecture, and interface budget closure.</td>
+              </tr>
+              <tr class="selected">
+                <td class="candidate">Onboard Data Logging Architecture</td>
+                <td><strong style="color: var(--accent);">Custom full-data logger + independent COTS core-data logger</strong></td>
+                <td>Preserves high-rate engineering data while keeping minimum mission data on an independent path.</td>
+                <td>Storage technology down-select and data-rate budget.</td>
               </tr>
               <tr>
-                <td class="candidate">Candidate B — // FILL IN</td>
-                <td><span class="score s3">3</span></td>
-                <td><span class="score s5">5</span></td>
-                <td><span class="score s4">4</span></td>
-                <td><span class="score s3">3</span></td>
-                <td><span class="score s4">4</span></td>
-                <td>19</td>
+                <td class="candidate">Power Interface Strategy</td>
+                <td>PPS-owned batteries/regulators feeding CDH-required protected rails</td>
+                <td>Keeps battery ownership with Power Production and Storage while giving CDH clear voltage/current requirements.</td>
+                <td>Voltage rails, peak current, connector pinout, and protection allocation.</td>
               </tr>
               <tr>
-                <td class="candidate">Candidate C — // FILL IN</td>
-                <td><span class="score s4">4</span></td>
-                <td><span class="score s3">3</span></td>
-                <td><span class="score s3">3</span></td>
-                <td><span class="score s5">5</span></td>
-                <td><span class="score s2">2</span></td>
-                <td>17</td>
-              </tr>
-              <tr>
-                <td class="candidate">Custom Build — // FILL IN</td>
-                <td><span class="score s5">5</span></td>
-                <td><span class="score s4">4</span></td>
-                <td><span class="score s5">5</span></td>
-                <td><span class="score s2">2</span></td>
-                <td><span class="score s2">2</span></td>
-                <td>18</td>
+                <td class="candidate">Safety Controls</td>
+                <td>Default-safe outputs, inhibits, watchdog/brownout logic, ESD and harness controls</td>
+                <td>Turns hazard analysis into testable hardware, software, and procedure requirements.</td>
+                <td>Verification matrix and bench-test procedures.</td>
               </tr>
             </tbody>
           </table>
@@ -425,8 +434,7 @@
           <span class="table-scroll-hint">Swipe to view full matrix</span>
 
           <p style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-mute); margin-top: 20px; font-weight: 500;">
-            Scoring: 1 (poor) — 5 (excellent). Selected candidate marked with <span style="color: var(--accent);">▸</span>.
-            Full rationale and datasheets archived in <span style="color: var(--accent);">/docs/TS-AV-001</span>.
+            Result: architecture baselines are closed enough to guide the next matrices. Final flight hardware is not yet selected.
           </p>
         </div>
       </div>
@@ -439,61 +447,60 @@
           <div class="brief-section-num">§ 05 · Timeline</div>
           <div>
             <h2 class="brief-section-title">Phases &amp; <em>milestones</em>.</h2>
-            <p class="brief-section-kicker">Where we've been, where we are, what's next.</p>
+            <p class="brief-section-kicker">Progress to date and the next engineering closures.</p>
           </div>
         </header>
 
         <div class="timeline reveal">
           <div class="tl-item done">
             <div class="tl-date">FEB 2026</div>
-            <h3 class="tl-title">Team formed · Avionics lead assigned</h3>
+            <h3 class="tl-title">CDH lead role established</h3>
             <p class="tl-body">
-              Recruited the five-person avionics team, scoped subsystem ownership, set
-              weekly cadence and tooling (issue tracking, shared docs, repo structure).
+              Took ownership of the Command and Data Handling subsystem and began organizing
+              a five-member team around requirements, interfaces, architecture, and reviewable outputs.
+            </p>
+            <span class="tl-tag">CLOSED</span>
+          </div>
+
+          <div class="tl-item done">
+            <div class="tl-date">APR 2026</div>
+            <h3 class="tl-title">Configuration-control foundation drafted</h3>
+            <p class="tl-body">
+              Authored the CDH Document Control Protocol so requirements, interfaces, analyses,
+              test plans, verification records, and change orders follow a consistent numbering and release system.
+            </p>
+            <span class="tl-tag">CLOSED</span>
+          </div>
+
+          <div class="tl-item done">
+            <div class="tl-date">APR 2026</div>
+            <h3 class="tl-title">Initial CDH hazard assessment completed</h3>
+            <p class="tl-body">
+              Built a first-pass hazard log covering power faults, ESD, unintended outputs,
+              processor resets, data-bus corruption, vibration-driven connector failures, thermal limits, EMI, and recovery handling.
             </p>
             <span class="tl-tag">CLOSED</span>
           </div>
 
           <div class="tl-item now">
-            <div class="tl-date">MAR — APR 2026</div>
-            <h3 class="tl-title">Preliminary design &amp; trade studies</h3>
+            <div class="tl-date">MAY 2026</div>
+            <h3 class="tl-title">Architecture decision matrices completed</h3>
             <p class="tl-body">
-              Building out the avionics architecture, running flight-computer and sensor
-              trade studies against mass, power, telemetry, and reliability budgets. ICD
-              and risk-register drafts in flight.
+              Completed flight-computer and onboard data-logging architecture decisions. The
+              converged baseline is a custom primary CDH board with independent COTS backup,
+              plus custom full-data logging with independent COTS core-data logging.
             </p>
-            <span class="tl-tag now">IN PROGRESS</span>
+            <span class="tl-tag now">CURRENT</span>
           </div>
 
           <div class="tl-item">
-            <div class="tl-date">MAY 2026 — TARGET</div>
-            <h3 class="tl-title">Preliminary Design Review (PDR)</h3>
+            <div class="tl-date">NEXT</div>
+            <h3 class="tl-title">Storage, interfaces, and test planning</h3>
             <p class="tl-body">
-              Subsystem-level PDR. Goal: architecture baselined, COTS candidates
-              down-selected, ICDs at REV A, risk register live.
+              Close the storage technology trade, define power and data budgets, release interface-control content,
+              and convert the hazard controls into a bench-test and verification plan.
             </p>
-            <span class="tl-tag">UPCOMING</span>
-          </div>
-
-          <div class="tl-item">
-            <div class="tl-date">SUMMER 2026</div>
-            <h3 class="tl-title">Build · bench checkout · CDR</h3>
-            <p class="tl-body">
-              Procure long-lead items, bring up the avionics on the bench, integrate with
-              power and recovery in a hardware-in-the-loop setup, and go through Critical
-              Design Review.
-            </p>
-            <span class="tl-tag">PLANNED</span>
-          </div>
-
-          <div class="tl-item">
-            <div class="tl-date">FALL 2026 / SPRING 2027</div>
-            <h3 class="tl-title">Integration · test · flight</h3>
-            <p class="tl-body">
-              Full-vehicle integration, end-to-end functional test, pre-flight checkouts,
-              and launch campaign.
-            </p>
-            <span class="tl-tag">PLANNED</span>
+            <span class="tl-tag">OPEN</span>
           </div>
         </div>
       </div>
@@ -506,29 +513,29 @@
           <div class="brief-section-num">§ 06 · My Role</div>
           <div>
             <h2 class="brief-section-title">What <em>I own</em>.</h2>
-            <p class="brief-section-kicker">Specific responsibilities and contributions.</p>
+            <p class="brief-section-kicker">Specific responsibilities and engineering impact.</p>
           </div>
         </header>
 
         <div class="brief-two reveal">
           <div class="brief-prose">
             <p>
-              As <strong>Avionics Lead</strong>, I own the subsystem end-to-end — from
-              architecture down to the integration plan that hands the box off to the launch
-              team. My day-to-day:
+              As <strong>CDH Lead</strong>, I am responsible for keeping the flight-computer,
+              sensing, logging, timing, safety-state, and subsystem-interface work coherent
+              before the team commits to hardware. My contribution has been to slow the team
+              down in the right places: requirements first, architecture second, components third,
+              PCB layout only after interfaces and budgets are credible.
             </p>
             <ul>
-              <li><strong>Architecture &amp; design.</strong> Drive the avionics block diagram, sensor selection, and interface definitions. Make sure every signal and every rail has a documented owner and a budget.</li>
-              <li><strong>Trade studies.</strong> Lead the team through structured trade studies on flight computer, IMU, GPS, and barometric candidates. Decisions tie back to weighted criteria, not vibes.</li>
-              <li><strong>Documentation.</strong> Author the avionics ICDs, the risk register, and the integration-and-test plan. The documents are the deliverable — they're what the rest of the team builds against.</li>
-              <li><strong>Team coordination.</strong> Run the avionics standup, unblock the five engineers, and represent avionics at program-level reviews.</li>
-              <li><strong>Cross-subsystem interfaces.</strong> Sync with comms, recovery, propulsion, and structures leads on every interface that crosses subsystem boundaries.</li>
+              <li><strong>Requirements discipline.</strong> Maintain CDH requirements as the basis for trade matrices instead of letting a preferred component define the mission.</li>
+              <li><strong>Architecture decisions.</strong> Lead flight-computer and data-logging trade studies with explicit assumptions, risks, and closure items.</li>
+              <li><strong>Documentation system.</strong> Created the CDH document-control protocol to make requirements, analyses, interface documents, verification records, and change orders traceable.</li>
+              <li><strong>Hazard reduction.</strong> Built the initial CDH hazard assessment and tied major failure modes to practical controls and verification methods.</li>
+              <li><strong>Cross-team integration.</strong> Define what CDH needs from Power Production and Storage, Communications, Structures, Thermal Determination and Control, Propulsion, and recovery-related interfaces.</li>
             </ul>
             <p>
-              <em>// EDIT ME:</em> Add 1–2 sentences on a specific contribution you're
-              proud of (e.g., "I led the IMU trade study and pushed back on the team's
-              initial favorite when its mag interference numbers didn't close the budget").
-              That's the kind of detail recruiters remember.
+              The page is intentionally honest: this is not presented as flown hardware yet.
+              The value is the systems-engineering work that prevents a premature, fragile avionics design.
             </p>
           </div>
 
@@ -537,19 +544,20 @@
               <div class="brief-aside-label">Tools Used</div>
               <ul class="brief-aside-list">
                 <li>Altium Designer</li>
-                <li>SolidWorks</li>
                 <li>Python · MATLAB</li>
                 <li>Git / GitHub</li>
-                <li>LaTeX</li>
+                <li>Google Workspace</li>
+                <li>LaTeX / technical writing</li>
               </ul>
             </div>
             <div class="brief-aside-block">
-              <div class="brief-aside-label">Deliverables</div>
+              <div class="brief-aside-label">Evidence Package</div>
               <ul class="brief-aside-list">
-                <li>ICD-AV-001 <span class="acc">·</span> Draft</li>
-                <li>TS-AV-001 <span class="acc">·</span> Draft</li>
-                <li>Risk Register <span class="acc">·</span> Draft</li>
-                <li>I&amp;T Plan <span class="acc">·</span> Outline</li>
+                <li>CDH Requirements Spec <span class="acc">·</span> Rev 0.6</li>
+                <li>CDH Document Control Protocol <span class="acc">·</span> Rev 0.1</li>
+                <li>CDH Hazard Assessment <span class="acc">·</span> Rev 0.1</li>
+                <li>Flight Computer Architecture Matrix</li>
+                <li>Data Logging Architecture Matrix</li>
               </ul>
             </div>
           </aside>
@@ -579,7 +587,7 @@
       <div class="footer-inner">
         <div>© 2026 · Christian Ibarra</div>
         <div>M-006 · BlueSpear · Mission Brief</div>
-        <div>Last Update · <span id="ts">—</span></div>
+        <div>Last Update · <span id="ts">2026-05-12</span></div>
       </div>
     </div>
   </footer>
