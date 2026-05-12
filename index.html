@@ -73,9 +73,27 @@
       width: 0%;
       transition: width .15s linear;
     }
-    @media (max-width: 880px) {
-      .hud { display: none; }
-    }
+   @media (max-width: 880px) {
+  .hud {
+    display: flex;
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+    min-width: 0;
+    width: auto;
+    max-width: calc(100vw - 28px);
+    padding: 12px 14px 10px;
+    font-size: 9px;
+  }
+
+  .hud-row {
+    grid-template-columns: 48px 1fr;
+  }
+
+  .hud-value {
+    font-size: 10px;
+  }
+}
 
     /* =========================
        HERO

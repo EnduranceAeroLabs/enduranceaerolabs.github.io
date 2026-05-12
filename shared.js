@@ -68,7 +68,9 @@
     const phaseSections = Array.from(document.querySelectorAll('[data-phase]'));
     function updateHud() {
       const max = document.body.scrollHeight - window.innerHeight;
-      const pct = Math.min(100, Math.max(0, (window.scrollY / max) * 100));
+      const pct = max > 0
+        ? Math.min(100, Math.max(0, (window.scrollY / max) * 100))
+        : 0;
       hudAlt.textContent = `${pct.toFixed(0).padStart(3, '0')}%`;
       hudBar.style.width = `${pct}%`;
 
@@ -94,6 +96,7 @@
     const navInner = document.querySelector('.nav-inner');
     const navLinks = document.querySelector('.nav-links');
     if (!navInner || !navLinks) return;
+    if (document.querySelector('.nav-burger') || document.querySelector('.mobile-drawer')) return;
 
     // --- 1. Inject hamburger button into nav
     const burger = document.createElement('button');
