@@ -244,11 +244,11 @@
       font-weight: 400;
     }
 
-    @media (max-width: 980px) {
-      .about-hero-grid { grid-template-columns: 1fr; gap: 48px; }
-      .portrait-wrap { position: static; max-width: 420px; }
-      .vitals-grid { grid-template-columns: 1fr 1fr; }
-    }
+    @media (max-width: 1180px) {
+  .about-hero-grid { grid-template-columns: 1fr; gap: 48px; }
+  .portrait-wrap { position: static; max-width: 420px; margin: 0 auto; }
+  .vitals-grid { grid-template-columns: 1fr 1fr; }
+}
     @media (max-width: 600px) {
       .vitals-grid { grid-template-columns: 1fr; }
     }
@@ -268,6 +268,54 @@
       .vital { padding: 22px 18px; min-height: 0; }
       .vital-value { font-size: 24px; }
     }
+
+    /* =========================
+   ABOUT PAGE · iPad Pro / tablet fix
+   Covers iPad Pro M4 portrait and landscape
+   ========================= */
+@media (hover: none) and (pointer: coarse) and (min-width: 761px) and (max-width: 1400px) {
+  .page-hero {
+    padding: 130px 0 36px;
+  }
+
+  .page-hero-title {
+    font-size: clamp(60px, 10vw, 112px);
+  }
+
+  .about-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding: 48px 0 80px;
+  }
+
+  .portrait-wrap {
+    position: static;
+    width: min(420px, 100%);
+    max-width: 420px;
+    justify-self: center;
+    margin: 0 auto;
+  }
+
+  .portrait {
+    width: 100%;
+    max-height: 58vh;
+  }
+
+  .portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .about-content .lede {
+    font-size: 30px;
+  }
+
+  .vitals-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
   </style>
 </head>
 <body>
