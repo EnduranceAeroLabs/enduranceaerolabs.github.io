@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mission Brief Pending — Endurance Aero Labs</title>
+  <meta name="description" content="Mission brief in preparation. Page coming soon to Endurance Aero Labs." />
+  <meta name="robots" content="noindex,follow">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/images/favicon-48.png">
+  <link rel="icon" href="assets/images/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0B0E14">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="shared.css">
+
+  <style>
+    /* Pending page — owns its layout; tone matches the rest of the site */
+    .pending {
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      padding: 140px 0 80px;
+      position: relative;
+    }
+    .pending-inner {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 80px;
+      align-items: center;
+      width: 100%;
+    }
+
+    /* LEFT: type */
+    .pending-eyebrow {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 28px;
+      font-weight: 500;
+    }
+    .pending-eyebrow::before { content: ""; width: 32px; height: 1px; background: var(--accent); }
+    .pending-eyebrow .dot {
+      display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(224, 153, 90, 0.15);
+      animation: pulse 2.4s ease-in-out infinite;
+      margin-left: 4px;
+    }
+
+    .pending-title {
+      font-family: var(--serif);
+      font-size: clamp(56px, 11vw, 144px);
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      font-weight: 400;
+      margin: 0 0 28px;
+    }
+    .pending-title em { font-style: italic; color: var(--accent); }
+
+    .pending-sub {
+      font-size: 18px;
+      line-height: 1.65;
+      color: var(--fg-soft);
+      max-width: 58ch;
+      margin: 0 0 40px;
+      font-weight: 400;
+    }
+    .pending-sub strong { color: var(--fg); font-weight: 600; }
+
+    /* Status table */
+    .pending-status {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      border-top: 1px solid var(--rule);
+      max-width: 520px;
+      margin-bottom: 40px;
+    }
+    .pending-status > div {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--rule);
+      font-family: var(--mono);
+      font-size: 12px;
+      display: flex; align-items: center;
+    }
+    .pending-status .lbl {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--fg-mute);
+      font-weight: 500;
+    }
+    .pending-status .val { color: var(--fg); font-weight: 500; }
+    .pending-status .val.acc { color: var(--accent); }
+    .pending-status .val .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 4px 10px;
+      border: 1px solid rgba(224,153,90,.4);
+      color: var(--accent);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .pending-status .val .badge .bdot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 3px rgba(224,153,90,.18);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+
+    /* Action buttons */
+    .pending-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .pending-btn {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--fg);
+      padding: 14px 22px;
+      border: 1px solid var(--rule);
+      transition: all .25s ease;
+      font-weight: 600;
+    }
+    .pending-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+    .pending-btn.primary {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+    }
+    .pending-btn.primary:hover {
+      background: transparent;
+      color: var(--accent);
+    }
+
+    /* RIGHT: schematic mark */
+    .pending-mark {
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+      position: relative;
+    }
+    .pending-mark svg {
+      width: 100%;
+      max-width: 360px;
+      height: auto;
+    }
+    .pending-mark-caption {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--fg-mute);
+      text-align: center;
+      font-weight: 500;
+    }
+    .pending-mark-caption .acc { color: var(--accent); }
+
+    /* SVG animation — pulsing scan line */
+    @keyframes scan-line {
+      0%   { transform: translateY(0);    opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { transform: translateY(160px); opacity: 0; }
+    }
+    .scan-line { animation: scan-line 4s ease-in-out infinite; }
+
+    @keyframes ring-spin {
+      to { transform: rotate(360deg); }
+    }
+    .ring-spin { transform-origin: 100px 100px; animation: ring-spin 30s linear infinite; }
+
+    @media (max-width: 980px) {
+      .pending-inner { grid-template-columns: 1fr; gap: 56px; }
+      .pending-mark { order: -1; max-width: 280px; margin: 0 auto; }
+    }
+    @media (max-width: 600px) {
+      .pending { padding: 110px 0 60px; }
+      .pending-status { grid-template-columns: 90px 1fr; max-width: 100%; }
+      .pending-btn { width: 100%; justify-content: center; }
+      .pending-sub { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================== NAV ========================== -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="brand" aria-label="Endurance Aero Labs">
+        <span class="brand-mark"><span></span></span>
+        Endurance&nbsp;Aero&nbsp;Labs
+      </a>
+      <div class="nav-links">
+        <a href="about.html">Operator</a>
+        <a href="index.html#capabilities">Capabilities</a>
+        <div class="nav-dropdown">
+          <a href="index.html#missions" class="nav-dropdown-trigger">Missions <span class="caret">▾</span></a>
+          <div class="nav-dropdown-menu">
+            <a href="bluespear.html"><span class="dd-id">M-006</span><span class="dd-name">BlueSpear · Avionics/CDH</span></a>
+            <a href="pending.html"><span class="dd-id">M-005</span><span class="dd-name">CubeSat Feasibility</span></a>
+            <a href="pending.html"><span class="dd-id">M-004</span><span class="dd-name">L1 High-Power Rocket</span></a>
+            <a href="pending.html"><span class="dd-id">M-003</span><span class="dd-name">Composites &amp; RF</span></a>
+            <a href="pending.html"><span class="dd-id">M-002</span><span class="dd-name">6-DOF Sim</span></a>
+            <div class="nav-dropdown-sep"></div>
+            <a href="index.html#missions" class="dd-all">All missions →</a>
+          </div>
+        </div>
+        <a href="index.html#education">Training</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+      <div class="nav-status">
+        <span class="status-dot"></span>
+        Available · Summer&nbsp;2026
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="pending">
+      <div class="container">
+        <div class="pending-inner">
+
+          <!-- LEFT: type -->
+          <div>
+            <div class="pending-eyebrow">
+              Mission Brief Pending
+              <span class="dot"></span>
+            </div>
+
+            <h1 class="pending-title">
+              Awaiting<br>
+              <em>transmission.</em>
+            </h1>
+
+            <p class="pending-sub">
+              This <strong>mission brief is in preparation.</strong> The full
+              writeup — overview, objectives, architecture, trade results,
+              timeline, and role detail — is being assembled to the same
+              standard as published briefs.
+            </p>
+
+            <div class="pending-status">
+              <div class="lbl">Status</div>
+              <div class="val">
+                <span class="badge"><span class="bdot"></span>In Preparation</span>
+              </div>
+              <div class="lbl">Doc Class</div>
+              <div class="val">Mission Brief · Internal Draft</div>
+              <div class="lbl">Hand-Off</div>
+              <div class="val acc">Returning to Mission Log</div>
+            </div>
+
+            <div class="pending-actions">
+              <a href="index.html#missions" class="pending-btn primary">
+                ← Back to Mission Log
+              </a>
+              <a href="bluespear.html" class="pending-btn">
+                See M-006 Brief →
+              </a>
+            </div>
+          </div>
+
+          <!-- RIGHT: schematic mark — antenna + scan -->
+          <aside class="pending-mark" aria-hidden="true">
+            <svg viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="0.8">
+
+              <!-- outer rotating ring (cardinal ticks, dashed) -->
+              <g class="ring-spin">
+                <circle cx="100" cy="100" r="88" stroke="var(--accent)" stroke-dasharray="2 6" />
+                <line x1="100" y1="6"  x2="100" y2="18"  stroke="var(--accent)" stroke-width="1.2"/>
+                <line x1="100" y1="182" x2="100" y2="194" stroke="var(--accent)" stroke-width="1.2"/>
+                <line x1="6"  y1="100" x2="18"  y2="100" stroke="var(--accent)" stroke-width="1.2"/>
+                <line x1="182" y1="100" x2="194" y2="100" stroke="var(--accent)" stroke-width="1.2"/>
+              </g>
+
+              <!-- mid static ring -->
+              <circle cx="100" cy="100" r="68" stroke="var(--fg-mute)" stroke-dasharray="1 3" opacity="0.5"/>
+
+              <!-- crosshair frame inside -->
+              <rect x="40" y="40" width="120" height="120"
+                    stroke="var(--rule)" stroke-width="0.6" />
+
+              <!-- scan line that travels down inside the frame -->
+              <line class="scan-line" x1="40" y1="40" x2="160" y2="40"
+                    stroke="var(--accent)" stroke-width="0.6" opacity="0.7" />
+
+              <!-- antenna / dish silhouette (matches favicon family) -->
+              <g stroke="var(--fg)" stroke-width="1.2" fill="none">
+                <!-- panel array left -->
+                <rect x="60" y="92" width="32" height="16" fill="var(--bg-soft)" />
+                <line x1="68" y1="92" x2="68" y2="108" stroke="var(--fg-mute)" stroke-width="0.5"/>
+                <line x1="76" y1="92" x2="76" y2="108" stroke="var(--fg-mute)" stroke-width="0.5"/>
+                <line x1="84" y1="92" x2="84" y2="108" stroke="var(--fg-mute)" stroke-width="0.5"/>
+                <!-- panel array right -->
+                <rect x="108" y="92" width="32" height="16" fill="var(--bg-soft)" />
+                <line x1="116" y1="92" x2="116" y2="108" stroke="var(--fg-mute)" stroke-width="0.5"/>
+                <line x1="124" y1="92" x2="124" y2="108" stroke="var(--fg-mute)" stroke-width="0.5"/>
+                <line x1="132" y1="92" x2="132" y2="108" stroke="var(--fg-mute)" stroke-width="0.5"/>
+                <!-- bus -->
+                <rect x="92" y="86" width="16" height="28" fill="var(--bg-soft)" />
+                <!-- antenna mast -->
+                <line x1="100" y1="86" x2="100" y2="76" />
+                <!-- dish -->
+                <circle cx="100" cy="72" r="6" fill="var(--bg)" />
+                <circle cx="100" cy="72" r="1.6" fill="var(--fg)" stroke="none" />
+              </g>
+
+              <!-- corner registration marks -->
+              <g stroke="var(--accent)" stroke-width="1.2" fill="none">
+                <path d="M 40 32 L 40 40 L 48 40" />
+                <path d="M 160 32 L 160 40 L 152 40" />
+                <path d="M 40 168 L 40 160 L 48 160" />
+                <path d="M 160 168 L 160 160 L 152 160" />
+              </g>
+
+              <!-- label text -->
+              <text x="100" y="26" font-family="JetBrains Mono" font-size="6.5"
+                    fill="var(--accent)" text-anchor="middle" letter-spacing="1.6"
+                    stroke="none">AWAITING SIGNAL</text>
+              <text x="100" y="180" font-family="JetBrains Mono" font-size="6"
+                    fill="var(--fg-mute)" text-anchor="middle" letter-spacing="1.4"
+                    stroke="none">EAL · STAND BY</text>
+            </svg>
+            <div class="pending-mark-caption">
+              Doc · <span class="acc">pending</span> · drafting in progress
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div>© 2026 · Christian Ibarra</div>
+        <div>Mission Brief · Pending</div>
+        <div>Last Update · <span id="ts">—</span></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="shared.js"></script>
+</body>
+</html>
